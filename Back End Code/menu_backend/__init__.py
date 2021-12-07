@@ -20,6 +20,10 @@ migrate = Migrate(app, db)
 
 bcrypt = Bcrypt()
 
+from flask_cors import CORS
+
+CORS(app)
+
 # pylint: disable=wrong-import-position
 
 from menu_backend import route

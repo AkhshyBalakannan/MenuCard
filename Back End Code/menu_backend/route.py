@@ -1,22 +1,28 @@
 '''Common Routes'''
-from flask import request, Response
+from flask import request, jsonify
+from flask.helpers import make_response
 from menu_backend import app, db
 from menu_backend.models.food import create_relation
 from menu_backend.decorators import token_required, admin_only
+from flask_cors import CORS, cross_origin
 
 # pylint: disable=unused-argument
 
+@app.route('/get-testing', methods=['GET'])
+@cross_origin()
+def testing_get():
+    return jsonify("msg",'hellooooooo from flask')
 
 @app.route('/testing', methods=['POST'])
+@cross_origin()
 def testing_front_end():
     '''Front End testing'''
-    print('dskhjfdshjjkfs')
-    print(request)
-    print(request.body)
-    print(request.body.data)
-    resp = Response("Foo bar baz")
-    resp.headers['Access-Control-Allow-Origin'] = '*'
-    return resp
+    userdetails = request.get_json()
+    print(userdetails['email'])
+    print(userdetails['password'])
+    print(userdetails['remember'])
+
+    return 'thanks fr the details'
 
 @app.route('/db-create')
 def create_all():

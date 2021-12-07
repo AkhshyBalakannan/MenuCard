@@ -1,5 +1,6 @@
 '''Auth Route'''
 from flask import request, Blueprint, jsonify
+from flask_cors.decorator import cross_origin
 from menu_backend.models.user import User, create_user, update_user, delete_user
 from menu_backend.decorators import token_required, admin_only
 from menu_backend.service import promote_user, generate_token
@@ -36,10 +37,11 @@ def register_user():
     return jsonify({'message': f'New user created! id - {public_id}'})
 
 
-@auth_routes.route('/login')
+@auth_routes.route('/login', methods=['POST'])
+@cross_origin()
 def login():
     '''Login function'''
-    auth = request.authorization
+    auth = request.get_json()
     res = generate_token(auth)
     return res
 
