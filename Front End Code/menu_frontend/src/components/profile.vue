@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="app-body">
-      {{ food_data }}
+      {{ user_data.admin }}
+      {{ user_data.username }}
+      {{ user_data.email }}
+      {{ user_data.public_id }}
     </div>
   </div>
 </template>
@@ -10,15 +13,15 @@
 export default {
   data() {
     return {
-      food_data : []
+      user_data : []
     };
   },
   created(){
     if (this.$cookie.get("token")){
-      this.$http.get('http://localhost:5000/food/all?t='+this.$cookie.get("token"))
+      this.$http.get('http://localhost:5000/user/profile?t='+this.$cookie.get("token"))
       .then(function(data){
           console.log(data)
-          this.food_data = data.body
+          this.user_data = data.body
         }
       );
     }

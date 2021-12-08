@@ -22,20 +22,20 @@ export default {
       user_token: "",
     };
   },
-  created(){
-    if (this.$cookie.get("login")){
-      this.user_token = this.$cookie.get("login")
-      console.log(this.user_token)
+  beforeMount(){
+    if (this.$cookie.get("token")){
+      this.$router.push('/');
     }
   },
   methods: {
     signup: function () {
-      console.log("checking");
+      console.log("Making Connection to server");
       this.$http
-        .post("http://127.0.0.1:5000/user/register", this.user_data)
+        .post("http://127.0.0.1:5000/user/new", this.user_data)
         .then(function (data) {
+          console.log(data)
           this.user_token = data.body.token;
-          this.$cookie.set("login", this.user_token, date);
+          this.$cookie.set("token", this.user_token);
         });
     },
   },

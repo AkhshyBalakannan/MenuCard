@@ -8,6 +8,16 @@ from menu_backend import bcrypt, app
 
 # pylint disable:no-member
 
+def user_details(current_user):
+    '''User details from database'''
+    user = {}
+    user['username'] = current_user.username
+    user['email'] = current_user.email
+    user['admin'] = current_user.admin
+    user['public_id'] = current_user.public_id
+
+    return user
+
 def promote_user(public_id):
     '''To promote user to admin Role'''
     user = User.query.filter_by(public_id=public_id).first()
@@ -27,7 +37,7 @@ def generate_token(auth):
 
     if bcrypt.check_password_hash(user.password, auth['password']):
         token = jwt.encode({'public_id': user.public_id, 'exp': datetime.datetime.utcnow(
-        ) + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+        ) + datetime.timedelta(days=365)}, app.config['SECRET_KEY'])
         return jsonify({'token': token})
 
     return make_response('Could not verify', 401)

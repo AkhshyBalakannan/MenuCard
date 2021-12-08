@@ -58,9 +58,15 @@ export default {
       user_token: "",
     };
   },
+  beforeMount(){
+    if (this.$cookie.get("token")){
+      this.$router.push('/');
+    }
+    console.log()
+  },
   methods: {
     signin: function () {
-      console.log("checking");
+      console.log("Making Connection to server");
       this.$http
         .post("http://127.0.0.1:5000/user/login", this.user_data)
         .then(function (data) {
@@ -69,7 +75,13 @@ export default {
             date = 1000;
           }
           this.user_token = data.body.token;
-          this.$cookie.set("login", this.user_token, date);
+          this.$cookie.set("token", this.user_token, date);
+          if (this.$router.currentRoute.query.next){
+            this.$router.push(this.$router.currentRoute.query.next)
+          }
+          else{
+            this.$router.push('/')
+          }
         });
     },
   },

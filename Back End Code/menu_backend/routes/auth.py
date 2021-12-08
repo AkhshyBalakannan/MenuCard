@@ -3,7 +3,7 @@ from flask import request, Blueprint, jsonify
 from flask_cors.decorator import cross_origin
 from menu_backend.models.user import User, create_user, update_user, delete_user
 from menu_backend.decorators import token_required, admin_only
-from menu_backend.service import promote_user, generate_token
+from menu_backend.service import promote_user, generate_token, user_details
 
 auth_routes = Blueprint("auth_routes", __name__)
 
@@ -30,11 +30,13 @@ def all_user(current_user):
 
 
 @auth_routes.route('/new', methods=['POST'])
+@cross_origin()
 def register_user():
     '''Post Register User'''
     data = request.get_json()
-    public_id = create_user(data)
-    return jsonify({'message': f'New user created! id - {public_id}'})
+    auth = create_user(data)
+    token = generate_token(auth)
+    return jsonify({'token': token})
 
 
 @auth_routes.route('/login', methods=['POST'])
@@ -45,9 +47,16 @@ def login():
     res = generate_token(auth)
     return res
 
+@auth_routes.route('/profile', methods=['GET'])
+@token_required
+def user_profile(current_user):
+    '''User Profile'''
+    data = user_details(current_user)
+    return jsonify(data)
 
 @auth_routes.route('/update', methods=['PATCH'])
 @token_required
+@cross_origin()
 def user_updation(current_user):
     '''Patch Update User'''
     data = request.get_json()
@@ -58,6 +67,7 @@ def user_updation(current_user):
 @auth_routes.route('/promote/<public_id>', methods=['PUT'])
 @token_required
 @admin_only
+@cross_origin()
 def user_promotion(current_user, public_id):
     '''Put Promote User'''
     promote_user(public_id)
@@ -67,6 +77,7 @@ def user_promotion(current_user, public_id):
 @auth_routes.route('/delete/<public_id>', methods=['DELETE'])
 @token_required
 @admin_only
+@cross_origin()
 def user_deletion(current_user, public_id):
     '''Delete - Delete User'''
     delete_user(public_id)

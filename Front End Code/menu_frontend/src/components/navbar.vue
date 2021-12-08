@@ -17,24 +17,32 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <router-link to="/">home</router-link>
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-              <a class="nav-link" href="#">Check Your Menu</a>
+              <router-link to="/menucard">Check your menu</router-link>
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-              <a class="nav-link" href="#">Foods</a>
+              <router-link to="/food">Food</router-link>
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-              <a class="nav-link" href="#">Profile</a>
+              <router-link to="/profile">Profile</router-link>
             </li>
           </ul>
-          <span class="d-flex">
+          <span class="d-flex" v-if="!current_user">
             <button class="btn btn-outline-warning" type="button">
-              Sign In
+              <router-link to="/signin">sign In</router-link>
+            </button>
+            <button class="btn btn-outline-warning" type="button">
+              <router-link to="/register">sign Up</router-link>
+            </button>
+          </span>
+          <span class="d-flex" v-if="current_user">
+            <button class="btn btn-outline-warning" type="button">
+              <router-link to="/signout">Sign Out</router-link>
             </button>
           </span>
         </div>
@@ -45,6 +53,12 @@
 
 <script>
 export default {
+  props: {
+    current_user: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
       msg: "Welcome to Your Vue.js App",
@@ -54,4 +68,12 @@ export default {
 </script>
 
 <style>
+a {
+  text-decoration: none;
+  color: white;
+}
+.router-link-exact-active {
+  background-color: white;
+  color: black;
+}
 </style>

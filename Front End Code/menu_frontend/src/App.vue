@@ -1,29 +1,35 @@
 <template>
   <div>
-    <component :is='component'></component>
+    <app-navbar :current_user="current_user"></app-navbar>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Menucard from './components/menucard.vue'
-import Food from './components/food.vue'
-import Signup from './components/signup.vue'
-import Signin from './components/signin.vue'
 
 export default {
-  name: "app",
-  components:{
-    'app-menucard': Menucard,
-    'app-food': Food,
-    'app-signup': Signup,
-    'app-signin': Signin
-  },
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
-      component: 'app-signup'
+      current_user: false,
     };
   },
+  created(){
+    if (this.$cookie.get("token")){
+      this.current_user = true;
+      }
+      else{
+        this.current_user= false
+      }
+    },
+  beforeUpdate(){
+    if (this.$cookie.get("token")){
+      this.current_user = true;
+      }
+      else{
+        this.current_user= false
+      }
+    },
+
 };
 </script>
 
