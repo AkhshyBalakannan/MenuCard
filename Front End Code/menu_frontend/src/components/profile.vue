@@ -10,25 +10,24 @@
 </template>
 
 <script>
+import store from "../store";
 export default {
   data() {
     return {
-      user_data : []
+      user_data: [],
     };
   },
-  created(){
-    if (this.$cookie.get("token")){
-      this.$http.get('http://localhost:5000/user/profile?t='+this.$cookie.get("token"))
-      .then(function(data){
-          console.log(data)
-          this.user_data = data.body
-        }
-      );
+  created() {
+    if (store.state.token) {
+      this.$http
+        .get("http://localhost:5000/user/profile?t=" + store.state.token)
+        .then(function (data) {
+          this.user_data = data.body;
+        });
+    } else {
+      this.$router.push("/signin?next=" + this.$router.history.current.path);
     }
-    else{
-      this.$router.push('/signin?next='+this.$router.history.current.path);
-    }
-  }
+  },
 };
 </script>
 

@@ -14,8 +14,8 @@ export default {
     console.log("Removing Token");
     if (this.$cookie.get("token")) {
       this.$cookie.delete("token");
+      this.$store.dispatch("troggle_off_auth");
     }
-    this.$router.push('/')
   },
 };
 </script>

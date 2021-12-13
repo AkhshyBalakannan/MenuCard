@@ -1,12 +1,10 @@
 <template>
   <div>
-      FOOD COMPONENT
-      <router-view></router-view>
+      MEAL ADDITION COMPONENT
   </div>
 </template>
 
 <script>
-import store from "../store";
 export default {
   data() {
     return {
@@ -15,5 +13,5 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 </style>

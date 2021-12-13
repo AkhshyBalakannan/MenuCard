@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>SIGNUP PAGE</h1>
-  </div>
+  <div>FOOD ADDITION COMPONENT</div>
 </template>
 
 <script>

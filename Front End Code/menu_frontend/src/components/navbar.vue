@@ -52,16 +52,11 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
-  props: {
-    current_user: {
-      type: Boolean,
-      required: true,
-    },
-  },
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
+      current_user = store.state.loggedIn
     };
   },
 };

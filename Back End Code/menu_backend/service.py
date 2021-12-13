@@ -1,7 +1,7 @@
 '''Service file contains helper function'''
 import datetime
 import jwt
-from flask import make_response, jsonify
+from flask import json, make_response, jsonify
 from menu_backend.models.user import User, db
 from menu_backend.models.meal import Meal
 from menu_backend import bcrypt, app
@@ -38,6 +38,8 @@ def generate_token(auth):
     if bcrypt.check_password_hash(user.password, auth['password']):
         token = jwt.encode({'public_id': user.public_id, 'exp': datetime.datetime.utcnow(
         ) + datetime.timedelta(days=365)}, app.config['SECRET_KEY'])
+        if user.admin:
+            return jsonify({'token':token, 'admin': 'true'})
         return jsonify({'token': token})
 
     return make_response('Could not verify', 401)
