@@ -1,23 +1,28 @@
 <template>
   <div>
-      MEAL COMPONENT
-      <router-view></router-view>
+    MEAL COMPONENT
+    {{ meal_data }}
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import store from "../store";
 export default {
   data() {
     return {
-      food_data : []
+      meal_data: [],
     };
-  }
+  },
+  beforeMount() {
+    this.$http
+      .get(this.$store.getters.url + "/meal/types?t=" + this.$cookie.get("token"))
+      .then((data) => {
+        console.log(data);
+        this.meal_data = data.body;
+      });
+  },
 };
 </script>
 
-<style scoped>
-.app-body {
-  background-color: azure;
-}
+<style>
 </style>

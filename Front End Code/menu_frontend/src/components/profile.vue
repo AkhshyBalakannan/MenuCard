@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import store from "../store";
 export default {
   data() {
     return {
@@ -18,9 +17,13 @@ export default {
     };
   },
   created() {
-    if (store.state.token) {
+    if (this.$cookie.get("token")) {
       this.$http
-        .get("http://localhost:5000/user/profile?t=" + store.state.token)
+        .get(
+          this.$store.getters.url +
+            "/user/profile?t=" +
+            this.$cookie.get("token")
+        )
         .then(function (data) {
           this.user_data = data.body;
         });

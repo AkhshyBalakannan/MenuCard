@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Successfully signed out !</h1>
-    <router-link to='/signin'>Want to sign in again</router-link>
+    <router-link to="/signin">Want to sign in again</router-link>
   </div>
 </template>
 
@@ -15,6 +15,7 @@ export default {
     if (this.$cookie.get("token")) {
       this.$cookie.delete("token");
       this.$store.dispatch("troggle_off_auth");
+      this.$store.dispatch("troggle_off_admin");
     }
   },
 };

@@ -13,7 +13,8 @@ export default new Vuex.Store({
         user: {
             loggedIn: false,
             isAdmin: false
-        }
+        },
+        url: 'http://localhost:5000'
     },
     // below block of code is simple cookie based storage with secure false
     // plugins: [createPersistedState({
@@ -38,6 +39,9 @@ export default new Vuex.Store({
     getters: {
         auth(state) {
             return state.user
+        },
+        url(state) {
+            return state.url
         }
     },
 
@@ -47,6 +51,12 @@ export default new Vuex.Store({
         },
         troggle_off_auth: (state) => {
             state.user.loggedIn = false;
+        },
+        troggle_on_admin: (state) => {
+            state.user.isAdmin = true;
+        },
+        troggle_off_admin: (state) => {
+            state.user.isAdmin = false;
         }
     },
 
@@ -59,6 +69,16 @@ export default new Vuex.Store({
         troggle_off_auth: (context) => {
             setTimeout(function () { // reach out for data
                 context.commit('troggle_off_auth');
+            }, 0);
+        },
+        troggle_on_admin: (context) => {
+            setTimeout(function () { // reach out for data
+                context.commit('troggle_on_admin');
+            }, 0);
+        },
+        troggle_off_admin: (context) => {
+            setTimeout(function () { // reach out for data
+                context.commit('troggle_off_admin');
             }, 0);
         }
     }

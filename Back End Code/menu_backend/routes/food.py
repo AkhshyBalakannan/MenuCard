@@ -2,6 +2,7 @@
 from flask import Blueprint, request, jsonify
 from menu_backend.models.food import Food, create_food, update_food, delete_food
 from menu_backend.decorators import token_required, admin_only
+from menu_backend.service import food_list
 
 
 food_routes = Blueprint("food_routes", __name__)
@@ -13,17 +14,8 @@ food_routes = Blueprint("food_routes", __name__)
 @token_required
 def food(current_user):
     '''Get All Food'''
-    datas = Food.query.all()
-    output = []
-
-    for data in datas:
-        food_data = {}
-        food_data['food_name'] = data.food_name
-        food_data['public_id'] = data.public_id
-        output.append(food_data)
-
-    return jsonify(output)
-
+    data = food_list()
+    return jsonify(data)
 
 @food_routes.route('/create', methods=['POST'])
 @token_required

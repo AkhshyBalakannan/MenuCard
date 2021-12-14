@@ -14,9 +14,8 @@ meal_routes = Blueprint("meal_routes", __name__)
 @token_required
 def meal_with_food(current_user):
     '''Get All Meal with food'''
-    output = menu_card()
-
-    return jsonify(output)
+    data = menu_card()
+    return jsonify(data)
 
 
 @meal_routes.route('/types', methods=['GET'])

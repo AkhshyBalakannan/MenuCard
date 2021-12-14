@@ -1,60 +1,31 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
+import authRoutes from './authRoutes'
+import menuRoutes from './menuRoutes'
 
-import Signin from '../components/signin.vue'
-import MenuCard from '../components/menucard.vue'
-import SignUp from '../components/signup.vue'
 import Profile from '../components/profile.vue'
-import SignOut from '../components/signout.vue'
 
-
-
-import guest from './middleware/guest'
 import auth from './middleware/auth'
-import isAdmin from './middleware/isAdmin'
 import middlewarePipeline from './middlewarePipeline'
-
 
 Vue.use(Router)
 
 const router = new Router({
     mode: 'history',
-    routes: [{
-        path: '/signup',
-        name: 'signup',
-        component: SignUp,
-        meta: {
-            middleware: [
-                guest
-            ]
+    routes: [
+        ...authRoutes,
+        ...menuRoutes,
+        {
+            path: '/profile',
+            name: 'profile',
+            component: Profile,
+            meta: {
+                middleware: [
+                    auth
+                ]
+            },
         }
-    },
-    {
-        path: '/signin',
-        name: 'signin',
-        component: Signin,
-        meta: {
-            middleware: [
-                guest
-            ]
-        }
-    },
-    {
-        path: '/signout',
-        name: 'signout',
-        component: SignOut,
-    },
-    {
-        path: '/profile',
-        name: 'profile',
-        component: Profile,
-        meta: {
-            middleware: [
-                auth
-            ]
-        }
-    }
     ]
 })
 

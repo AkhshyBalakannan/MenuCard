@@ -6,6 +6,8 @@ from menu_backend.models.food import create_relation
 from menu_backend.decorators import token_required, admin_only
 from flask_cors import CORS, cross_origin
 
+from menu_backend.service import get_menu_data
+
 # pylint: disable=unused-argument
 
 @app.route('/get-testing', methods=['GET'])
@@ -40,7 +42,7 @@ def drop_all(current_user):
     return 'Database has been dropped'
 
 
-@app.route('/link', methods=['LINK'])
+@app.route('/link', methods=['GET','PATCH'])
 @token_required
 @admin_only
 def relation(current_user):
@@ -48,6 +50,9 @@ def relation(current_user):
     Data must be given with
     food_public_id, meal_public_id
     '''
+    if(request.method == 'GET'):
+        menu_data = get_menu_data();
+        return jsonify(menu_data)
     data = request.get_json()
     relation_instance = create_relation(data)
     return f'created relation {relation_instance}'

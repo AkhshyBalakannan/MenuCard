@@ -25,7 +25,11 @@
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-              <router-link to="/food">Food</router-link>
+              <router-link to="/menucard/food">Food</router-link>
+            </li>
+            &nbsp;&nbsp;
+            <li class="nav-item">
+              <router-link to="/menucard/meal">Meal</router-link>
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
@@ -37,7 +41,7 @@
               <router-link to="/signin">sign In</router-link>
             </button>
             <button class="btn btn-outline-warning" type="button">
-              <router-link to="/register">sign Up</router-link>
+              <router-link to="/signup">sign Up</router-link>
             </button>
           </span>
           <span class="d-flex" v-if="current_user">
@@ -52,23 +56,14 @@
 </template>
 
 <script>
-import store from '../store'
 export default {
   data() {
     return {
-      current_user = store.state.loggedIn
+      current_user: this.$store.state.user.loggedIn,
     };
-  },
+  }
 };
 </script>
 
 <style>
-a {
-  text-decoration: none;
-  color: white;
-}
-.router-link-exact-active {
-  background-color: white;
-  color: black;
-}
 </style>

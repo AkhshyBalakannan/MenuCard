@@ -35,8 +35,7 @@ def register_user():
     '''Post Register User'''
     data = request.get_json()
     auth = create_user(data)
-    token = generate_token(auth)
-    return jsonify({'token': token})
+    return jsonify({'message': "account created successfully"})
 
 
 @auth_routes.route('/login', methods=['POST'])

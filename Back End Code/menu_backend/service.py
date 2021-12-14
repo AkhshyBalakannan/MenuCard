@@ -4,6 +4,7 @@ import jwt
 from flask import json, make_response, jsonify
 from menu_backend.models.user import User, db
 from menu_backend.models.meal import Meal
+from menu_backend.models.food import Food
 from menu_backend import bcrypt, app
 
 # pylint disable:no-member
@@ -33,7 +34,7 @@ def generate_token(auth):
     user = User.query.filter_by(username=auth['username']).first()
 
     if not user:
-        return make_response('Could not verify', 401)
+        return make_response('User Not Found in database', 404)
 
     if bcrypt.check_password_hash(user.password, auth['password']):
         token = jwt.encode({'public_id': user.public_id, 'exp': datetime.datetime.utcnow(
@@ -77,3 +78,25 @@ def meal_list():
         output.append(meal_data)
 
     return output
+
+def food_list():
+    '''List of Food'''
+    datas = Food.query.all()
+    output = []
+
+    for data in datas:
+        food_data = {}
+        food_data['food_name'] = data.food_name
+        food_data['public_id'] = data.public_id
+        output.append(food_data)
+
+    return output
+
+
+def get_menu_data():
+    '''list of Meal and food'''
+    meal_data = meal_list()
+    food_data = food_list()
+    relation_data = menu_card()
+
+    return ({'meal_data':meal_data, 'food_data': food_data, 'relation_data':relation_data})

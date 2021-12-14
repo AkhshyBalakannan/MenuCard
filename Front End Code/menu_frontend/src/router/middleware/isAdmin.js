@@ -1,5 +1,5 @@
 export default function isAdmin({ next, store }) {
-    if (!store.getters.auth.isSubscribed) {
+    if (!store.getters.auth.isAdmin) {
         return next({
             name: 'menucard'
         })
