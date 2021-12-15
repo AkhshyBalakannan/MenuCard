@@ -1,8 +1,13 @@
 <template>
   <div>
-    MEAL COMPONENT
-    {{ meal_data }}
     <router-view></router-view>
+    MEAL COMPONENT
+    <ul>
+      <li v-for="data in meal_data" :key="data.id">
+        Meal Name : {{ data.meal_name }} <br>
+        Public Id: {{ data.public_id }}
+        </li>
+    </ul>
   </div>
 </template>
 

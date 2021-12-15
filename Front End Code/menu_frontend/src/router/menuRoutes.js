@@ -20,47 +20,46 @@ export default [
                 auth
             ]
         },
-        children: [{
-            path: 'food',
-            name: 'dashboard.food',
-            component: Food,
-            meta: {
-                middleware: [
-                    auth
-                ]
-            },
-            children: [{
-                path: 'add',
-                name: 'food.add',
-                component: foodAddition,
-                meta: {
-                    middleware: [
-                        auth,
-                        isAdmin
-                    ]
-                }
-            }]
+
+    }, {
+        path: '/food',
+        name: 'dashboard.food',
+        component: Food,
+        meta: {
+            middleware: [
+                auth
+            ]
         },
-        {
-            path: 'meal',
-            name: 'dashboard.meal',
-            component: Meal,
+        children: [{
+            path: 'add',
+            name: 'food.add',
+            component: foodAddition,
             meta: {
                 middleware: [
-                    auth
+                    auth,
+                    isAdmin
                 ]
-            },
-            children: [{
-                path: 'add',
-                name: 'meal.add',
-                component: mealAddition,
-                meta: {
-                    middleware: [
-                        auth,
-                        isAdmin
-                    ]
-                }
-            }]
+            }
+        }]
+    }, {
+        path: '/meal',
+        name: 'dashboard.meal',
+        component: Meal,
+        meta: {
+            middleware: [
+                auth
+            ]
+        },
+        children: [{
+            path: 'add',
+            name: 'meal.add',
+            component: mealAddition,
+            meta: {
+                middleware: [
+                    auth,
+                    isAdmin
+                ]
+            }
         }]
     },
     {

@@ -26,6 +26,7 @@ export default {
         )
         .then((data) => {
           console.log(data);
+          this.$router.go()
         });
     },
   },

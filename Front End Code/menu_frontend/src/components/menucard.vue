@@ -1,19 +1,43 @@
 <template>
   <div>
-    <h1>MENUCARD PAGE</h1>
-    <ol>
-      <li v-for="data in menu_data" :key="data.id">
-        PUBLIC_ID = {{ data.public_id }} <br />
-        MEAL_DATA = {{ data.meal_name }} <br />
-        <span v-if="data.meal_food[1]">
-          FOOD_DATA =
-          <span v-for="food_data in data.meal_food" :key="food_data.id"
-            >{{ food_data }} ,
-          </span>
-        </span>
-      </li>
-    </ol>
-    <router-view></router-view>
+    <div id="cards_landscape_wrap-2">
+      <div class="container">
+        <h1>MENUCARD PAGE</h1>
+        <div class="row">
+          <div
+            class="col-xs-12 col-sm-6 col-md-3 col-lg-4"
+            v-for="data in menu_data"
+            :key="data.id"
+          >
+            <a href="">
+              <div class="card-flyer">
+                <div class="text-box">
+                  <div class="image-box">
+                    <img
+                      src="https://cdn.pixabay.com/photo/2018/03/30/15/11/deer-3275594_960_720.jpg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="text-container">
+                    <h6>{{ data.meal_name }}</h6>
+                    <p>
+                      PUBLIC_ID = {{ data.public_id }} <br />
+                      <h6 v-if="data.meal_food[1]" style="margin-top:10px"> 
+                        <span
+                          v-for="food_data in data.meal_food"
+                          :key="food_data.id"
+                          >{{ food_data }} ,
+                        </span>
+                      </h6>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -25,11 +25,11 @@
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-              <router-link to="/menucard/food">Food</router-link>
+              <router-link to="/food">Food</router-link>
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-              <router-link to="/menucard/meal">Meal</router-link>
+              <router-link to="/meal">Meal</router-link>
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
