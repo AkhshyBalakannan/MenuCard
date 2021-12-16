@@ -18,7 +18,8 @@ export default {
       console.log(this.$route.fullPath);
       if (
         this.$route.fullPath === "/signin" ||
-        this.$route.fullPath === "/signup"
+        this.$route.fullPath === "/signup" ||
+        this.$route.fullPath === "/signout"
       ) {
         return false;
       }

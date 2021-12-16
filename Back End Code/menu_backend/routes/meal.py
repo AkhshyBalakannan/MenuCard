@@ -3,6 +3,8 @@ from flask import request, Blueprint, jsonify
 from menu_backend.models.meal import Meal, create_meal, update_meal, delete_meal
 from menu_backend.decorators import token_required, admin_only
 from menu_backend.service import meal_list, menu_card
+from flask_cors.decorator import cross_origin
+
 
 
 meal_routes = Blueprint("meal_routes", __name__)
@@ -43,6 +45,7 @@ def meal_create(current_user):
 @meal_routes.route('/update', methods=['PATCH'])
 @token_required
 @admin_only
+@cross_origin()
 def meal_update(current_user):
     '''Patch Update Meal
     Data must be given with 

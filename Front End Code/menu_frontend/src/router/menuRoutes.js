@@ -2,8 +2,8 @@ import MenuCard from '../components/menucard.vue'
 import Food from '../components/food.vue'
 import Meal from '../components/meal.vue'
 import Link from '../components/link.vue'
-import mealAddition from '../components/mealaddition.vue'
-import foodAddition from '../components/foodaddition.vue'
+import mealEdit from '../components/mealEdit.vue'
+import foodEdit from '../components/foodEdit.vue'
 
 
 import auth from './middleware/auth'
@@ -29,19 +29,20 @@ export default [
             middleware: [
                 auth
             ]
-        },
-        children: [{
-            path: 'add',
-            name: 'food.add',
-            component: foodAddition,
-            meta: {
-                middleware: [
-                    auth,
-                    isAdmin
-                ]
-            }
-        }]
-    }, {
+        }
+    }, 
+    {
+        path: '/food/edit',
+        name: 'food.edit',
+        component: foodEdit,
+        meta: {
+            middleware: [
+                auth,
+                isAdmin
+            ]
+        }
+    },
+    {
         path: '/meal',
         name: 'dashboard.meal',
         component: Meal,
@@ -49,18 +50,18 @@ export default [
             middleware: [
                 auth
             ]
-        },
-        children: [{
-            path: 'add',
-            name: 'meal.add',
-            component: mealAddition,
-            meta: {
-                middleware: [
-                    auth,
-                    isAdmin
-                ]
-            }
-        }]
+        }
+    },
+    {
+        path: '/meal/edit',
+        name: 'meal.edit',
+        component: mealEdit,
+        meta: {
+            middleware: [
+                auth,
+                isAdmin
+            ]
+        }
     },
     {
         path: '/link',

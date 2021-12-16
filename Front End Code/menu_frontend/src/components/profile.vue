@@ -1,36 +1,71 @@
 <template>
   <div>
-    <body>
-      <div id="main">
-        <div id="photo">
-          <img
-            src="https://images.unsplash.com/photo-1544502062-f82887f03d1c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1427&q=80"
-            id="profilepic"
-          />
-        </div>
-        <div id="info">
-          <div id="name">
-            <h2>{{ user_data.username }}</h2>
-            <h3>{{ user_data.email }}</h3>
-          </div>
-          <div id="contacts">
-            <div class="link" id="github">
-              <h4>{{ user_data.public_id }}</h4>
+    <div class="container mt-3">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-7">
+          <div class="card p-3 py-4 profile-body">
+            <div class="text-center">
+              <img
+                src="https://i.imgur.com/bDLhJiP.jpg"
+                width="100"
+                class="rounded-circle"
+              />
             </div>
-            <div class="link" id="insta">
-              <h4>{{ user_data.admin }}</h4>
-            </div>
-            <div class="link" id="dribbble">
-              <a
-                href="https://dribbble.com/beetran"
-                style="color: rgba(255, 255, 255, 0.6)"
-                ><i class="fab fa-dribbble"></i
-              ></a>
+            <div class="text-center mt-3">
+              <span class="bg-secondary p-1 px-4 rounded text-white"
+                >ABC-MENUCARD</span
+              >
+              <h5 class="mt-3 mb-0">{{ user_data.username }}</h5>
+
+              <div class="px-4 mt-3">
+                <p class="fonts">{{ user_data.email }}</p>
+              </div>
+              <div class="update">
+                <h4>Update Profile</h4>
+                <small>Each updation needs password for verification</small>
+                <div class="row mt-2">
+                  <div class="col">
+                    <label for="username">Username : </label>
+                  </div>
+                  <div class="col">
+                    <input
+                      class="form-control px-4"
+                      type="text"
+                      v-model="user_data.username"
+                      id="username"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col"><label for="email">Email :</label></div>
+                  <div class="col">
+                    <input
+                      class="form-control px-4"
+                      type="text"
+                      v-model="user_data.email"
+                      id="email"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">*Password :</div>
+                  <div class="col">
+                    <input
+                      class="form-control px-4"
+                      type="password"
+                      v-model="user_data.password"
+                    />
+                  </div>
+                </div>
+                <button class="btn btn-primary px-4 ms-3 mt-2" @click.prevent="updateProfile">
+                  Update Profile Details
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </body>
+    </div>
   </div>
 </template>
 
@@ -38,7 +73,7 @@
 export default {
   data() {
     return {
-      user_data: [],
+      user_data: {},
     };
   },
   created() {
@@ -56,117 +91,75 @@ export default {
       this.$router.push("/signin?next=" + this.$router.history.current.path);
     }
   },
+  methods: {
+    updateProfile() {
+      this.$http
+        .patch(
+          this.$store.getters.url +
+            "/user/update?t=" +
+            this.$cookie.get("token"),
+          this.user_data
+        )
+        .then((data) => {
+          console.log(data);
+          this.$router.go()
+        });
+    },
+  },
 };
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap");
-
-body {
-  font-family: "Montserrat", sans-serif;
-  background: #673ab7; /* fallback for old browsers */
-  background: linear-gradient(
-    to right,
-    #111536,
-    #161a3f
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background-image: url("https://cdn.osxdaily.com/wp-content/uploads/2020/10/macos-big-sur-wallpaper-2-scaled.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
+.profile-body {
+  background-color: rgb(255, 238, 217);
 }
 
-#main {
-  display: grid;
-
-  grid-template-columns: 40% 60%;
-  max-width: 500px;
-  height: 450.5px;
-  background: linear-gradient(
-    -45deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.4)
-  );
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-
-  margin: auto;
-  margin-top: 140px;
-}
-#name {
-  color: rgba(255, 255, 255, 0.6);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-  padding: 0 40px;
-}
-#profilepic {
-  height: 140px;
-  width: 140px;
-  box-shadow: 0 0 42px 0 rgba(255, 255, 255, 0.17);
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border-radius: 10px;
-  border: 3px solid rgba(255, 255, 255, 0.18);
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: 50% 10%;
-}
-#photo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.link {
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0px 32px 0 rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  display: block;
-  font-size: 40px;
-  padding: 4px;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  margin: 10px;
+.card {
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-.link:hover {
-  transform: translateY(-2px);
+.card:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #e1bee7;
+  transform: scaleY(1);
   transition: all 0.5s;
-  background: rgba(255, 255, 255, 0.5);
+  transform-origin: bottom;
 }
 
-#github:hover a {
-  background: -webkit-linear-gradient(rgb(124, 0, 124), #333);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.card:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #8e24aa;
+  transform: scaleY(0);
+  transition: all 0.5s;
+  transform-origin: bottom;
 }
-#insta:hover a {
-  background: -webkit-linear-gradient(45deg, #f6ce6d, #dd2b68, #ae32a9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
+.card:hover::after {
+  transform: scaleY(1);
 }
-#dribbble:hover a {
-  background: -webkit-linear-gradient(45deg, #e45189, #e04b85);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
+.fonts {
+  font-size: 15px;
 }
-#contacts {
-  display: flex;
-  flex-direction: row;
+
+.update button {
+  border: 1px solid #8e24aa !important;
+  background-color: #8e24aa;
+  color: #fff;
+  height: 40px;
 }
 </style>

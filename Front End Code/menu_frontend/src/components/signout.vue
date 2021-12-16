@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-5 px-5">
     <h1>Successfully signed out !</h1>
     <router-link to="/signin">Want to sign in again</router-link>
   </div>

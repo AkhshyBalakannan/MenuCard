@@ -5,6 +5,7 @@ import authRoutes from './authRoutes'
 import menuRoutes from './menuRoutes'
 
 import Profile from '../components/profile.vue'
+import Notfoundpage from '../components/notFoundPage.vue'
 
 import auth from './middleware/auth'
 import middlewarePipeline from './middlewarePipeline'
@@ -25,6 +26,11 @@ const router = new Router({
                     auth
                 ]
             },
+        },
+        {
+            path: '*',
+            name: '404page',
+            component: Notfoundpage,
         }
     ]
 })

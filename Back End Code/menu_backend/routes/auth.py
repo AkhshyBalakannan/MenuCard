@@ -3,7 +3,7 @@ from flask import request, Blueprint, jsonify
 from flask_cors.decorator import cross_origin
 from menu_backend.models.user import User, create_user, update_user, delete_user
 from menu_backend.decorators import token_required, admin_only
-from menu_backend.service import promote_user, generate_token, user_details
+from menu_backend.service import promote_user, generate_token, user_details, check_user_and_update
 
 auth_routes = Blueprint("auth_routes", __name__)
 
@@ -59,8 +59,10 @@ def user_profile(current_user):
 def user_updation(current_user):
     '''Patch Update User'''
     data = request.get_json()
-    update_user(data, current_user)
-    return jsonify({'message': 'Updated user!'})
+    val = check_user_and_update(data, current_user)
+    if val :
+        return jsonify({'message': 'Updated user!'})
+    return jsonify({'message': 'Wrong password User Updation failed!'})
 
 
 @auth_routes.route('/promote/<public_id>', methods=['PUT'])

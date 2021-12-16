@@ -17,10 +17,6 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link to="/">home</router-link>
-            </li>
-            &nbsp;&nbsp;
-            <li class="nav-item">
               <router-link to="/menucard">Check your menu</router-link>
             </li>
             &nbsp;&nbsp;
@@ -45,7 +41,7 @@
             </button>
           </span>
           <span class="d-flex" v-if="current_user">
-            <button class="btn btn-outline-warning" type="button">
+            <button class="btn btn-warning" type="button">
               <router-link to="/signout">Sign Out</router-link>
             </button>
           </span>
@@ -66,4 +62,19 @@ export default {
 </script>
 
 <style>
+.nav-item a{
+  text-decoration: none;
+  color: white;
+}
+.nav-item .router-link-exact-active{
+  background-color: white;
+  color: black;
+  font-weight: 700;
+  padding: 0px 5px 0px 5px;
+}
+.btn a{
+  text-decoration: none;
+
+  color: black;
+}
 </style>

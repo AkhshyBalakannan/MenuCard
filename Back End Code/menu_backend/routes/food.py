@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify
 from menu_backend.models.food import Food, create_food, update_food, delete_food
 from menu_backend.decorators import token_required, admin_only
 from menu_backend.service import food_list
+from flask_cors.decorator import cross_origin
 
 
 food_routes = Blueprint("food_routes", __name__)

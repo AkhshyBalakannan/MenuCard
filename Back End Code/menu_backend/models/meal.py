@@ -27,9 +27,10 @@ def create_meal(data):
 
 def update_meal(data):
     '''Update meal Instance'''
+    print(data)
     meal_instance = Meal.query.filter_by(
-        meal_name=data['old_meal_name']).first()
-    meal_instance.meal_name = data['new_meal_name']
+        public_id=data['public_id']).first()
+    meal_instance.meal_name = data['meal_name']
     db.session.add(meal_instance)
     db.session.commit()
     return meal_instance
@@ -38,5 +39,5 @@ def update_meal(data):
 def delete_meal(public_id):
     '''Delete meal Instance'''
     meal_instance = Meal.query.filter_by(public_id=public_id).first()
-    meal_instance.delete()
+    db.session.delete(meal_instance)
     db.session.commit()

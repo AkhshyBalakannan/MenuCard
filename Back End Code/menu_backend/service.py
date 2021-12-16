@@ -2,7 +2,7 @@
 import datetime
 import jwt
 from flask import json, make_response, jsonify
-from menu_backend.models.user import User, db
+from menu_backend.models.user import User, db, update_user
 from menu_backend.models.meal import Meal
 from menu_backend.models.food import Food
 from menu_backend import bcrypt, app
@@ -100,3 +100,9 @@ def get_menu_data():
     relation_data = menu_card()
 
     return ({'meal_data':meal_data, 'food_data': food_data, 'relation_data':relation_data})
+
+def check_user_and_update(data, current_user):
+    if bcrypt.check_password_hash(current_user.password, data['password']):
+        update_user(data, current_user)
+        return True
+    return False

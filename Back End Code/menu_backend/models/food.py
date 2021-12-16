@@ -26,8 +26,8 @@ def create_food(data):
 def update_food(data):
     '''Update food instance'''
     food_instance = Food.query.filter_by(
-        food_name=data['old_food_name']).first()
-    food_instance.food_name = data['new_food_name']
+        public_id=data['public_id']).first()
+    food_instance.food_name = data['food_name']
     db.session.add(food_instance)
     db.session.commit()
     return food_instance
