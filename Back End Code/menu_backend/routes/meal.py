@@ -16,6 +16,7 @@ meal_routes = Blueprint("meal_routes", __name__)
 @token_required
 def meal_with_food(current_user):
     '''Get All Meal with food'''
+    print(request.headers)
     data = menu_card()
     return jsonify(data)
 
@@ -45,7 +46,6 @@ def meal_create(current_user):
 @meal_routes.route('/update', methods=['PATCH'])
 @token_required
 @admin_only
-@cross_origin()
 def meal_update(current_user):
     '''Patch Update Meal
     Data must be given with 

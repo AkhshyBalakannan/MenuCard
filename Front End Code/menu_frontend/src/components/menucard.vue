@@ -49,12 +49,10 @@ export default {
     };
   },
   beforeMount() {
-    this.$http
-      .get(this.$store.getters.url + "/meal/all?t=" + this.$cookie.get("token"))
-      .then((data) => {
-        console.log(data);
-        this.menu_data = data.body;
-      });
+    this.$http.get(this.$store.getters.url + "/meal/all").then((data) => {
+      console.log(data);
+      this.menu_data = data.body;
+    });
   },
 };
 </script>

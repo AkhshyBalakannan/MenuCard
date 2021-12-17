@@ -1,11 +1,13 @@
 <template>
   <div>
     <div class="card mt-3 mb-2">
-      <div class="card-body"><p>Hello Admin, You can <b>Add, Edit, Delete</b> Meal details below.</p></div>
+      <div class="card-body">
+        <p>Hello Admin, You can <b>Add, Edit, Delete</b> Meal details below.</p>
+      </div>
     </div>
     <div class="card mb-3">
       <div class="card-body px-5">
-        <h5>Add New Meal</h5> 
+        <h5>Add New Meal</h5>
         <div class="input-group">
           <input
             type="text"
@@ -83,12 +85,7 @@ export default {
   methods: {
     add_meal() {
       this.$http
-        .post(
-          this.$store.getters.url +
-            "/meal/create?t=" +
-            this.$cookie.get("token"),
-          this.add_meal_data
-        )
+        .post(this.$store.getters.url + "/meal/create", this.add_meal_data)
         .then((data) => {
           console.log(data);
           this.$router.go();
@@ -99,11 +96,7 @@ export default {
       console.log("Entering Meal Delete Function");
       this.$http
         .delete(
-          this.$store.getters.url +
-            "/meal/delete/" +
-            this.delete_public_id +
-            "?t=" +
-            this.$cookie.get("token")
+          this.$store.getters.url + "/meal/delete/" + this.delete_public_id
         )
         .then((data) => {
           console.log(data);
@@ -114,12 +107,7 @@ export default {
       this.update.public_id = data;
       console.log("Entering Food Update Function");
       this.$http
-        .patch(
-          this.$store.getters.url +
-            "/meal/update?t=" +
-            this.$cookie.get("token"),
-          this.update
-        )
+        .patch(this.$store.getters.url + "/meal/update", this.update)
         .then((data) => {
           console.log(data);
           this.$router.go();
@@ -127,14 +115,10 @@ export default {
     },
   },
   beforeMount() {
-    this.$http
-      .get(
-        this.$store.getters.url + "/meal/types?t=" + this.$cookie.get("token")
-      )
-      .then((data) => {
-        console.log(data);
-        this.meals_data = data.body;
-      });
+    this.$http.get(this.$store.getters.url + "/meal/types").then((data) => {
+      console.log(data);
+      this.meals_data = data.body;
+    });
   },
 };
 </script>

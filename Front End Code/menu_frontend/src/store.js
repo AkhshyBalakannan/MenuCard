@@ -40,6 +40,9 @@ export default new Vuex.Store({
         auth(state) {
             return state.user
         },
+        admin(state){
+            return state.isAdmin
+        },
         url(state) {
             return state.url
         }

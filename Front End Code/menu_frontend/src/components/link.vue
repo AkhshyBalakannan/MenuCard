@@ -88,22 +88,18 @@ export default {
     };
   },
   beforeMount() {
-    this.$http
-      .get(this.$store.getters.url + "/link?t=" + this.$cookie.get("token"))
-      .then((data) => {
-        console.log(data);
-        this.link_data = data.body;
-      });
+    this.$http.get(this.$store.getters.url + "/link").then((data) => {
+      console.log(data);
+      this.link_data = data.body;
+    });
   },
   methods: {
     make_link() {
       this.$http
-        .patch(
-          "http://localhost:5000/link?t=" + this.$cookie.get("token"),
-          this.link
-        )
+        .patch(this.$store.getters.url + "/link", this.link)
         .then((data) => {
           console.log(data);
+          this.$router.go();
         });
     },
   },

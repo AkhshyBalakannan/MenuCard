@@ -19,15 +19,27 @@
             <li class="nav-item">
               <router-link to="/menucard">Check your menu</router-link>
             </li>
-            &nbsp;&nbsp;
+
             <li class="nav-item">
               <router-link to="/food">Food</router-link>
             </li>
-            &nbsp;&nbsp;
+
+            <li class="nav-item" v-if="admin_user">
+              <router-link to="/food/edit">-CRUD</router-link>
+            </li>
+
             <li class="nav-item">
               <router-link to="/meal">Meal</router-link>
             </li>
-            &nbsp;&nbsp;
+
+            <li class="nav-item" v-if="admin_user">
+              <router-link to="/meal/edit">-CRUD</router-link>
+            </li>
+
+            <li class="nav-item" v-if="admin_user">
+              <router-link to="/link">Link Meal & Food</router-link>
+            </li>
+
             <li class="nav-item">
               <router-link to="/profile">Profile</router-link>
             </li>
@@ -55,26 +67,30 @@
 export default {
   data() {
     return {
-      current_user: this.$store.state.user.loggedIn,
+      current_user: this.$store.getters.auth.loggedIn,
+      admin_user: this.$store.getters.auth.isAdmin,
     };
-  }
+  },
 };
 </script>
 
 <style>
-.nav-item a{
+.nav-item a {
   text-decoration: none;
   color: white;
 }
-.nav-item .router-link-exact-active{
+.nav-item .router-link-exact-active {
   background-color: white;
   color: black;
   font-weight: 700;
-  padding: 0px 5px 0px 5px;
+  padding: 3px 5px 3px 5px;
 }
-.btn a{
+.btn a {
   text-decoration: none;
 
   color: black;
+}
+.nav-item {
+  margin: 0px 10px 0px 10px;
 }
 </style>

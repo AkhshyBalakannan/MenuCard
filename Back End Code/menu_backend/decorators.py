@@ -13,8 +13,8 @@ def token_required(func):
     def decorated(*args, **kwargs):
         token = None
 
-        if request.args.get('t'):
-            token = request.args.get('t')
+        if request.headers.get('Authorization'):
+            token = request.headers.get('Authorization')
 
         if not token:
             return jsonify({'token_missing': 'Token is missing!'}), 401

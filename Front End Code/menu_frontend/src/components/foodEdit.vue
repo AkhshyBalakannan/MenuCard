@@ -3,7 +3,7 @@
     <div class="card mt-3 mb-2">
       <div class="card-body">
         <p>Hello Admin, You can <b>Add, Edit, Delete</b> Food details below.</p>
-        </div>
+      </div>
     </div>
     <div class="card mb-3">
       <div class="card-body px-5">
@@ -44,11 +44,15 @@
               <td class="col">{{ data.public_id }}</td>
               <td class="col-2">
                 <div class="row">
-                <input type="text" v-model.lazy="update.food_name" class="form-control col" />&nbsp;<span
-                  class="btn btn-primary col"
-                  @click.prevent="update_food(data.public_id)"
-                  >Update</span
-                >
+                  <input
+                    type="text"
+                    v-model.lazy="update.food_name"
+                    class="form-control col"
+                  />&nbsp;<span
+                    class="btn btn-primary col"
+                    @click.prevent="update_food(data.public_id)"
+                    >Update</span
+                  >
                 </div>
               </td>
               <td class="col-1">
@@ -83,23 +87,16 @@ export default {
     };
   },
   beforeMount() {
-    this.$http
-      .get(this.$store.getters.url + "/food/all?t=" + this.$cookie.get("token"))
-      .then((data) => {
-        console.log(data);
-        this.foods_data = data.body;
-      });
+    this.$http.get(this.$store.getters.url + "/food/all").then((data) => {
+      console.log(data);
+      this.foods_data = data.body;
+    });
   },
   methods: {
     add_food() {
       console.log("Entering Add Food Function");
       this.$http
-        .post(
-          this.$store.getters.url +
-            "/food/create?t=" +
-            this.$cookie.get("token"),
-          this.add_food_data
-        )
+        .post(this.$store.getters.url + "/food/create", this.add_food_data)
         .then((data) => {
           console.log(data);
           this.$router.go();
@@ -110,11 +107,7 @@ export default {
       console.log("Entering Food Delete Function");
       this.$http
         .delete(
-          this.$store.getters.url +
-            "/food/delete/" +
-            this.delete_public_id +
-            "?t=" +
-            this.$cookie.get("token")
+          this.$store.getters.url + "/food/delete/" + this.delete_public_id
         )
         .then((data) => {
           console.log(data);
@@ -125,12 +118,7 @@ export default {
       this.update.public_id = data;
       console.log("Entering Food Update Function");
       this.$http
-        .patch(
-          this.$store.getters.url +
-            "/food/update?t=" +
-            this.$cookie.get("token"),
-          this.update
-        )
+        .patch(this.$store.getters.url + "/food/update", this.update)
         .then((data) => {
           console.log(data);
           this.$router.go();

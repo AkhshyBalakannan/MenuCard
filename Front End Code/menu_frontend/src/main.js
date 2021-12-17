@@ -13,6 +13,12 @@ Vue.use(VueCookie);
 
 Vue.component('app-navbar', navbar)
 
+Vue.http.interceptors.push(function(request) {
+  if(this.$cookie.get("token")){
+    request.headers.set('Authorization', this.$cookie.get("token"))
+  }
+});
+
 new Vue({
   el: '#app',
   router,

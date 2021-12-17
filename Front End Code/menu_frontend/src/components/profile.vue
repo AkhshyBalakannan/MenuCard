@@ -57,7 +57,10 @@
                     />
                   </div>
                 </div>
-                <button class="btn btn-primary px-4 ms-3 mt-2" @click.prevent="updateProfile">
+                <button
+                  class="btn btn-primary px-4 ms-3 mt-2"
+                  @click.prevent="updateProfile"
+                >
                   Update Profile Details
                 </button>
               </div>
@@ -79,11 +82,7 @@ export default {
   created() {
     if (this.$cookie.get("token")) {
       this.$http
-        .get(
-          this.$store.getters.url +
-            "/user/profile?t=" +
-            this.$cookie.get("token")
-        )
+        .get(this.$store.getters.url + "/user/profile")
         .then(function (data) {
           this.user_data = data.body;
         });
@@ -102,7 +101,7 @@ export default {
         )
         .then((data) => {
           console.log(data);
-          this.$router.go()
+          this.$router.go();
         });
     },
   },

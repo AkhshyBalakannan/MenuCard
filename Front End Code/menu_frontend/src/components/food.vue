@@ -34,12 +34,10 @@ export default {
     };
   },
   beforeMount() {
-    this.$http
-      .get(this.$store.getters.url + "/food/all?t=" + this.$cookie.get("token"))
-      .then((data) => {
-        console.log(data);
-        this.food_data = data.body;
-      });
+    this.$http.get(this.$store.getters.url + "/food/all").then((data) => {
+      console.log(data);
+      this.food_data = data.body;
+    });
   },
 };
 </script>
