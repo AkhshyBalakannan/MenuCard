@@ -76,33 +76,37 @@
 export default {
   data() {
     return {
-      user_data: {},
+      user_data: {
+        username: "",
+        email: "",
+        password: "",
+      },
     };
   },
   created() {
-    if (this.$cookie.get("token")) {
-      this.$http
-        .get(this.$store.getters.url + "/user/profile")
-        .then(function (data) {
-          this.user_data = data.body;
-        });
-    } else {
-      this.$router.push("/signin?next=" + this.$router.history.current.path);
-    }
+    this.$http
+      .get(this.$store.getters.url + "/user/profile")
+      .then(function (data) {
+        this.user_data = data.body;
+      });
   },
   methods: {
     updateProfile() {
-      this.$http
-        .patch(
-          this.$store.getters.url +
-            "/user/update?t=" +
-            this.$cookie.get("token"),
-          this.user_data
+      if (
+        !(
+          this.user_data.email == "" ||
+          this.user_data.password == "" ||
+          this.user_data.username == ""
         )
-        .then((data) => {
-          console.log(data);
-          this.$router.go();
-        });
+      ) {
+        this.$http
+          .patch(this.$store.getters.url + "/user/update", this.user_data)
+          .then((data) => {
+            this.$router.go();
+          });
+      } else {
+        console.log("ERROR");
+      }
     },
   },
 };

@@ -2,7 +2,7 @@
   <div>
     <div id="cards_landscape_wrap-2">
       <div class="container">
-        <h1>MENUCARD PAGE</h1>
+        <h1>MENUCARD HOME</h1>
         <div class="row">
           <div
             class="col-xs-12 col-sm-6 col-md-3 col-lg-4"
@@ -13,24 +13,25 @@
               <div class="card-flyer">
                 <div class="text-box">
                   <div class="image-box">
-                    <img
+                    <!-- <img
                       src="https://cdn.pixabay.com/photo/2018/03/30/15/11/deer-3275594_960_720.jpg"
                       alt=""
-                    />
+                    /> -->
+                    <img src="../assets/menucard.png" alt=""/>
                   </div>
                   <div class="text-container">
                     <h6>{{ data.meal_name }}</h6>
-                    <p>
-                      PUBLIC_ID = {{ data.public_id }} <br />
+                    <div>
+                     <!-- <p> PUBLIC_ID = {{ data.public_id }} </p> -->
                       <h6 v-if="data.meal_food[1]" style="margin-top:10px"> 
-                        <span
-                          v-for="food_data in data.meal_food"
-                          :key="food_data.id"
-                          >{{ food_data }} ,
+                        <p class="food_list">Food List</p>
+                        <span v-for="(food_data,key,index) of data.meal_food" :key="key">
+                          {{food_data}}
+                          <span v-if="index != Object.keys(data.meal_food).length - 1">, </span>
                         </span>
                       </h6>
-                    </p>
-                  </div>
+                    </div>
+                  </div>                
                 </div>
               </div>
             </a>

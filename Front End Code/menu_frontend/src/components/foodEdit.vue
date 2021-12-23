@@ -15,6 +15,7 @@
             v-model="add_food_data.food_name"
             name="add_food_data.food_name"
             placeholder="Food Name"
+            :class="{required_field_false : error.food}"
           />
           <div class="input-group-postpend">
             <button class="btn btn-success" @click.prevent="add_food">
@@ -77,6 +78,9 @@ export default {
       add_food_data: {
         food_name: "",
       },
+      error:{
+        food:false,
+      },
       url: "",
       foods_data: [],
       delete_public_id: "",
@@ -94,13 +98,18 @@ export default {
   },
   methods: {
     add_food() {
-      console.log("Entering Add Food Function");
-      this.$http
-        .post(this.$store.getters.url + "/food/create", this.add_food_data)
-        .then((data) => {
-          console.log(data);
-          this.$router.go();
-        });
+      if (!(this.add_food_data.food_name == "")) {
+        console.log("Entering Add Food Function");
+        this.$http
+          .post(this.$store.getters.url + "/food/create", this.add_food_data)
+          .then((data) => {
+            console.log(data);
+            this.$router.go();
+          });
+      }
+      else{
+          this.error.food = true;
+        }
     },
     delete_food(data) {
       this.delete_public_id = data;
@@ -115,19 +124,24 @@ export default {
         });
     },
     update_food(data) {
-      this.update.public_id = data;
-      console.log("Entering Food Update Function");
-      this.$http
-        .patch(this.$store.getters.url + "/food/update", this.update)
-        .then((data) => {
-          console.log(data);
-          this.$router.go();
-        });
+      if (!(this.update.food_name == "")) {
+        this.update.public_id = data;
+        console.log("Entering Food Update Function");
+        this.$http
+          .patch(this.$store.getters.url + "/food/update", this.update)
+          .then((data) => {
+            console.log(data);
+            this.$router.go();
+          });
+      }
     },
   },
 };
 </script>
 
 <style>
+.required_field_false {
+  border-color: rgb(245, 61, 61);
+}
 </style>
 

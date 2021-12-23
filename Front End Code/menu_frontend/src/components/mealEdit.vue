@@ -14,6 +14,7 @@
             class="form-control"
             v-model="add_meal_data.meal_name"
             placeholder="Meal Name"
+            :class="{required_field_false : error.meal}"
           />
           <div class="input-group-postpend">
             <button class="btn btn-success" @click.prevent="add_meal">
@@ -74,6 +75,9 @@ export default {
       add_meal_data: {
         meal_name: "",
       },
+      error:{
+        meal:false,
+      },
       meals_data: [],
       delete_public_id: "",
       update: {
@@ -84,12 +88,17 @@ export default {
   },
   methods: {
     add_meal() {
-      this.$http
-        .post(this.$store.getters.url + "/meal/create", this.add_meal_data)
-        .then((data) => {
-          console.log(data);
-          this.$router.go();
-        });
+      if (!(this.add_meal_data.meal_name == "")) {
+        this.$http
+          .post(this.$store.getters.url + "/meal/create", this.add_meal_data)
+          .then((data) => {
+            console.log(data);
+            this.$router.go();
+          });
+      }
+       else{
+          this.error.meal = true;
+        }
     },
     delete_meal(data) {
       this.delete_public_id = data;
@@ -104,14 +113,16 @@ export default {
         });
     },
     update_meal(data) {
-      this.update.public_id = data;
-      console.log("Entering Food Update Function");
-      this.$http
-        .patch(this.$store.getters.url + "/meal/update", this.update)
-        .then((data) => {
-          console.log(data);
-          this.$router.go();
-        });
+      if (!(this.update.meal_name == "")) {
+        this.update.public_id = data;
+        console.log("Entering Food Update Function");
+        this.$http
+          .patch(this.$store.getters.url + "/meal/update", this.update)
+          .then((data) => {
+            console.log(data);
+            this.$router.go();
+          });
+      }
     },
   },
   beforeMount() {
@@ -124,4 +135,7 @@ export default {
 </script>
 
 <style>
+.required_field_false {
+  border-color: rgb(245, 61, 61);
+}
 </style>

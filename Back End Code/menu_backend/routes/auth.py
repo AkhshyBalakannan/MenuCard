@@ -1,7 +1,7 @@
 '''Auth Route'''
 from flask import request, Blueprint, jsonify
 from flask_cors.decorator import cross_origin
-from menu_backend.models.user import User, create_user, update_user, delete_user
+from menu_backend.models.user import User, create_user, delete_user
 from menu_backend.decorators import token_required, admin_only
 from menu_backend.service import promote_user, generate_token, user_details, check_user_and_update
 
@@ -46,6 +46,7 @@ def login():
     res = generate_token(auth)
     return res
 
+
 @auth_routes.route('/profile', methods=['GET'])
 @token_required
 def user_profile(current_user):
@@ -53,14 +54,15 @@ def user_profile(current_user):
     data = user_details(current_user)
     return jsonify(data)
 
+
 @auth_routes.route('/update', methods=['PATCH'])
 @token_required
-@cross_origin()
 def user_updation(current_user):
     '''Patch Update User'''
     data = request.get_json()
+    print(data)
     val = check_user_and_update(data, current_user)
-    if val :
+    if val:
         return jsonify({'message': 'Updated user!'})
     return jsonify({'message': 'Wrong password User Updation failed!'})
 

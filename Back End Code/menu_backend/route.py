@@ -10,21 +10,6 @@ from menu_backend.service import get_menu_data
 
 # pylint: disable=unused-argument
 
-@app.route('/get-testing', methods=['GET'])
-@cross_origin()
-def testing_get():
-    return jsonify("msg",'hellooooooo from flask')
-
-@app.route('/testing', methods=['POST'])
-@cross_origin()
-def testing_front_end():
-    '''Front End testing'''
-    userdetails = request.get_json()
-    print(userdetails['email'])
-    print(userdetails['password'])
-    print(userdetails['remember'])
-
-    return 'thanks fr the details'
 
 @app.route('/db-create')
 def create_all():

@@ -1,0 +1,15 @@
+http://localhost:8080/signup
+http://localhost:8080/signin
+http://localhost:8080/signout
+
+http://localhost:8080/profile
+
+http://localhost:8080/menucard
+
+http://localhost:8080/food
+http://localhost:8080/food/edit
+
+http://localhost:8080/meal
+http://localhost:8080/meal/edit
+
+http://localhost:8080/link
