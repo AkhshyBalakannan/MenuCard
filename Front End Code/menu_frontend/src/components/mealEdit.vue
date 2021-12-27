@@ -5,6 +5,8 @@
         <p>Hello Admin, You can <b>Add, Edit, Delete</b> Meal details below.</p>
       </div>
     </div>
+    <form method="post" @submit.prevent="add_meal">
+      <validation-provider rules="required" v-slot="{ errors }">
     <div class="card mb-3">
       <div class="card-body px-5">
         <h5>Add New Meal</h5>
@@ -15,15 +17,19 @@
             v-model="add_meal_data.meal_name"
             placeholder="Meal Name"
             :class="{required_field_false : error.meal}"
+            required
           />
           <div class="input-group-postpend">
-            <button class="btn btn-success" @click.prevent="add_meal">
+            <button type="submit" class="btn btn-success">
               Add Meal
             </button>
           </div>
         </div>
+         <span class="required_field_false">{{ errors[0] }}</span>
       </div>
     </div>
+     </validation-provider>
+    </form>
     <div class="row mt-3 px-5">
       <div class="col">
         <h5>Meal List</h5>

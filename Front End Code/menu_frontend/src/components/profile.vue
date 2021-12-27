@@ -20,9 +20,11 @@
               <div class="px-4 mt-3">
                 <p class="fonts">{{ user_data.email }}</p>
               </div>
+              <form method="post" @submit.prevent="updateProfile">
               <div class="update">
                 <h4>Update Profile</h4>
                 <small>Each updation needs password for verification</small>
+                <validation-provider rules="required" v-slot="{ errors }">
                 <div class="row mt-2">
                   <div class="col">
                     <label for="username">Username : </label>
@@ -34,8 +36,11 @@
                       v-model="user_data.username"
                       id="username"
                     />
+                     <span class="required_field_false">{{ errors[0] }}</span>
                   </div>
                 </div>
+                </validation-provider>
+                <validation-provider rules="required" v-slot="{ errors }">
                 <div class="row">
                   <div class="col"><label for="email">Email :</label></div>
                   <div class="col">
@@ -45,18 +50,27 @@
                       v-model="user_data.email"
                       id="email"
                     />
+                    <span class="required_field_false">{{ errors[0] }}</span>
                   </div>
+                  
                 </div>
+                </validation-provider>
+                <validation-provider rules="required" v-slot="{ errors }">
                 <div class="row">
+                  
                   <div class="col">*Password :</div>
+                  
                   <div class="col">
                     <input
                       class="form-control px-4"
                       type="password"
                       v-model="user_data.password"
                     />
+                    <span class="required_field_false">{{ errors[0] }}</span>
                   </div>
+                  
                 </div>
+                </validation-provider>
                 <button
                   class="btn btn-primary px-4 ms-3 mt-2"
                   @click.prevent="updateProfile"
@@ -64,6 +78,7 @@
                   Update Profile Details
                 </button>
               </div>
+              </form>
             </div>
           </div>
         </div>

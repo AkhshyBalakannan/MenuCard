@@ -1,5 +1,5 @@
 <template>
-  <body class="main-bg">
+  <div class="main-bg">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-4 col-md-6 col-sm-6">
@@ -7,44 +7,52 @@
             <div class="card-title text-center border-bottom">
               <h2 class="p-3">Signin</h2>
             </div>
-            <div class="card-body">
-              <div class="mb-4">
-                <label for="username" class="form-label">Username/Email</label>
-                <input
-                  type="text"
-                  v-model="user_data.username"
-                  class="form-control"
-                  id="username"
-                />
-              </div>
-              <div class="mb-4">
-                <label for="password" class="form-label">Password</label>
-                <input
-                  type="password"
-                  v-model="user_data.password"
-                  class="form-control"
-                  id="password"
-                />
-              </div>
-              <!-- <div class="mb-4">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="remember"
-                  />
-                  <label for="remember" class="form-label">Remember Me</label>
-                </div> -->
-              <div class="d-grid">
-                <button class="btn text-dark main-bg" @click="signin">
-                  SUBMIT
-                </button>
-              </div>
+              <form method="post" @submit.prevent="signin">
+                <div class="card-body">
+                  <div class="mb-4">
+                    <validation-provider rules="required" v-slot="{ errors }">
+                    <label for="username" class="form-label">Username/Email</label>
+                    <input
+                      type="text"
+                      v-model="user_data.username"
+                      class="form-control"
+                      id="username"
+                    />
+                    <span class="required_field_false">{{ errors[0] }}</span>
+                    </validation-provider>
+                  </div>
+                  <div class="mb-4">
+                    <validation-provider rules="required" v-slot="{ errors }">
+                    <label for="password" class="form-label">Password</label>
+                    <input
+                      type="password"
+                      v-model="user_data.password"
+                      class="form-control"
+                      id="password"
+                    />
+                    <span class="required_field_false">{{ errors[0] }}</span>
+                    </validation-provider>
+                  </div>
+                  <!-- <div class="mb-4">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="remember"
+                      />
+                      <label for="remember" class="form-label">Remember Me</label>
+                    </div> -->
+                  <div class="d-grid">
+                    <button class="btn text-dark main-bg" type="submit">
+                      SUBMIT
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <script>

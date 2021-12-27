@@ -6,6 +6,7 @@ import router from './router/router'
 import store from './store'
 import navbar from './components/navbar.vue'
 
+
 // Vue.component('app-navbar', NavBar);
 
 Vue.use(VueResource);
@@ -13,10 +14,21 @@ Vue.use(VueCookie);
 
 Vue.component('app-navbar', navbar)
 
-Vue.http.interceptors.push(function(request) {
-  if(this.$cookie.get("token")){
+Vue.http.interceptors.push(function (request) {
+  if (this.$cookie.get("token")) {
     request.headers.set('Authorization', this.$cookie.get("token"))
   }
+});
+
+import { ValidationProvider, extend } from 'vee-validate';
+import { required } from 'vee-validate/dist/rules';
+
+
+Vue.component('validation-provider', ValidationProvider);
+
+extend('required', {
+  ...required,
+  message: 'This field is required'
 });
 
 new Vue({

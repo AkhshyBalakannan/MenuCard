@@ -5,26 +5,32 @@
         <p>Hello Admin, You can <b>Add, Edit, Delete</b> Food details below.</p>
       </div>
     </div>
-    <div class="card mb-3">
-      <div class="card-body px-5">
-        <h5>Add New Food</h5>
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            v-model="add_food_data.food_name"
-            name="add_food_data.food_name"
-            placeholder="Food Name"
-            :class="{required_field_false : error.food}"
-          />
-          <div class="input-group-postpend">
-            <button class="btn btn-success" @click.prevent="add_food">
-              Add Food
-            </button>
+    <form method="post" @submit.prevent="add_food">
+      <validation-provider rules="required" v-slot="{ errors }">
+        <div class="card mb-3">
+          <div class="card-body px-5">
+            <h5>Add New Food</h5>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                v-model="add_food_data.food_name"
+                name="add_food_data.food_name"
+                placeholder="Food Name"
+                required
+              />
+
+              <div class="input-group-postpend">
+                <button type="submit" class="btn btn-success" >
+                  Add Food
+                </button>
+              </div>
+            </div>
+            <span class="required_field_false">{{ errors[0] }}</span>
           </div>
         </div>
-      </div>
-    </div>
+      </validation-provider>
+    </form>
     <div class="row mt-3 px-5">
       <div class="col">
         <h5>Food List</h5>
@@ -78,8 +84,8 @@ export default {
       add_food_data: {
         food_name: "",
       },
-      error:{
-        food:false,
+      error: {
+        food: false,
       },
       url: "",
       foods_data: [],
@@ -97,19 +103,14 @@ export default {
     });
   },
   methods: {
-    add_food() {
-      if (!(this.add_food_data.food_name == "")) {
-        console.log("Entering Add Food Function");
-        this.$http
-          .post(this.$store.getters.url + "/food/create", this.add_food_data)
-          .then((data) => {
-            console.log(data);
-            this.$router.go();
-          });
-      }
-      else{
-          this.error.food = true;
-        }
+    add_food(e) {
+      e.preventDefault();
+      this.$http
+        .post(this.$store.getters.url + "/food/create", this.add_food_data)
+        .then((data) => {
+          console.log(data);
+          this.$router.go();
+        });
     },
     delete_food(data) {
       this.delete_public_id = data;
@@ -142,6 +143,7 @@ export default {
 <style>
 .required_field_false {
   border-color: rgb(245, 61, 61);
+  color: rgb(245, 61, 61);
 }
 </style>
 

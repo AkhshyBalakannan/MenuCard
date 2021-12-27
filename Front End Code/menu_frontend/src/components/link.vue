@@ -6,16 +6,20 @@
         Public ID provided below.
       </div>
     </div>
-    <form @submit="make_link">
+    <form method="POST" @submit.prevent="make_link">
+       
       <div class="card mb-3">
         <div class="card-body">
           <div class="input-group">
             <label class="input-group-text" for="meal">Meal Public ID</label>
+            <validation-provider rules="required" v-slot="{ errors }">
             <select
               id="meal"
               class="form-control"
               v-model="link.meal_public_id"
               :class="{ required_field_false: error.meal }"
+              style="width:350px;"
+              required
             >
               <option
                 v-for="data in link_data.meal_data"
@@ -25,12 +29,17 @@
                 {{ data.meal_name }}
               </option>
             </select>
+            <span class="required_field_false">{{ errors[0] }}</span>
+            </validation-provider>
             <label class="input-group-text" for="food">Food Public ID</label>
+            <validation-provider rules="required" v-slot="{ errors }">
             <select
               id="food"
               class="form-control"
               v-model="link.food_public_id"
               :class="{ required_field_false: error.food }"
+              style="width:350px;"
+              required
             >
               <option
                 v-for="data in link_data.food_data"
@@ -40,18 +49,8 @@
                 {{ data.food_name }}
               </option>
             </select>
-            <!-- <input
-            type="text"
-            class="form-control"
-            v-model="link.meal_public_id"
-            placeholder="MEAL PUBLIC ID"
-          />
-          <input
-            type="text"
-            class="form-control"
-            v-model="link.food_public_id"
-            placeholder="FOOD PUBLIC ID"
-          /> -->
+            <span class="required_field_false">{{ errors[0] }}</span>
+            </validation-provider>
             <div class="input-group-postpend">
               <button class="btn btn-success" type="submit">Make Link</button>
             </div>
@@ -117,7 +116,7 @@ export default {
       },
       error: {
         meal: false,
-        food:false
+        food: false,
       },
     };
   },
@@ -138,20 +137,6 @@ export default {
             console.log(data);
             this.$router.go();
           });
-      }
-      else{
-        if (this.link.meal_public_id==""){
-          this.error.meal = true;
-        }
-        else{
-          this.error.meal = false;
-        }
-        if (this.link.food_public_id==""){
-          this.error.food = true
-        }
-         else{
-          this.error.meal = false;
-        }   
       }
     },
   },
