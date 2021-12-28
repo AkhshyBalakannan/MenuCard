@@ -60,7 +60,9 @@ def menu_card():
         meal_data['meal_food'] = {}
 
         for index in range(len(data.meal_food)):
-            meal_data['meal_food'][index+1] = data.meal_food[index].food_name
+            meal_data['meal_food'][index+1] = {}
+            meal_data['meal_food'][index+1]['food_name'] = data.meal_food[index].food_name
+            meal_data['meal_food'][index+1]['public_id'] = data.meal_food[index].public_id
         
         output.append(meal_data)
     

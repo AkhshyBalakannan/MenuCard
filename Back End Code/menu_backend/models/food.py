@@ -15,9 +15,11 @@ class Food(db.Model):
         '''repr'''
         return f"Food('{self.food_name}')"
 
+
 def create_food(data):
     '''Create food instance'''
-    food_instance = Food(food_name=data['food_name'], public_id=str(uuid.uuid4()))
+    food_instance = Food(
+        food_name=data['food_name'], public_id=str(uuid.uuid4()))
     db.session.add(food_instance)
     db.session.commit()
     return food_instance
@@ -46,6 +48,17 @@ def create_relation(data):
         public_id=data['food_public_id']).first()
     meal_instance = models.Meal.query.filter_by(
         public_id=data['meal_public_id']).first()
-    food_instance.food_meals.append(meal_instance)
+    meal_instance.meal_food.append(food_instance)
+    db.session.commit()
+    return food_instance
+
+
+def delete_relation(data):
+    '''Delete Relation with meal'''
+    food_instance = Food.query.filter_by(
+        public_id=data['food_public_id']).first()
+    meal_instance = models.Meal.query.filter_by(
+        public_id=data['meal_public_id']).first()
+    meal_instance.meal_food.remove(food_instance)
     db.session.commit()
     return food_instance

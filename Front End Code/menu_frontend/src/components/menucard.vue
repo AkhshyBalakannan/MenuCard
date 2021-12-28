@@ -26,7 +26,7 @@
                       <h6 v-if="data.meal_food[1]" style="margin-top:10px"> 
                         <p class="food_list">Food List</p>
                         <span v-for="(food_data,key,index) of data.meal_food" :key="key">
-                          {{food_data}}
+                          {{food_data.food_name}}
                           <span v-if="index != Object.keys(data.meal_food).length - 1">, </span>
                         </span>
                       </h6>

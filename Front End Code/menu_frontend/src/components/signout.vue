@@ -8,14 +8,14 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+    };
   },
   beforeMount() {
-    console.log("Removing Token");
-    if (this.$cookie.get("token")) {
-      this.$cookie.delete("token");
+    if (this.$store.getters.auth.loggedIn) {
       this.$store.dispatch("troggle_off_auth");
       this.$store.dispatch("troggle_off_admin");
+      this.$store.dispatch("delete_token");
     }
   },
 };

@@ -46,6 +46,7 @@
                       SUBMIT
                     </button>
                   </div>
+                  <router-link class="offset-4" to="signup">Wanna Join Us</router-link>
                 </div>
               </form>
             </div>
@@ -74,15 +75,14 @@ export default {
         .then(function (data) {
           if (data.body.token) {
             this.user_token = data.body.token;
+            this.$store.dispatch("set_token", data.body.token)
             this.$store.dispatch("troggle_on_auth");
-            this.$cookie.set("token", this.user_token, 100);
             if (data.body.admin) {
-              console.log(data.body.admin);
               this.$store.dispatch("troggle_on_admin");
             }
             this.$router.push("menucard");
           }
-          console.log(data);
+          console.log(data)
         });
     },
   },

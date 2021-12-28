@@ -14,7 +14,8 @@ export default new Vuex.Store({
             loggedIn: false,
             isAdmin: false
         },
-        url: 'http://localhost:5000'
+        url: 'http://localhost:5000',
+        token: ''
     },
     // below block of code is simple cookie based storage with secure false
     // plugins: [createPersistedState({
@@ -40,11 +41,14 @@ export default new Vuex.Store({
         auth(state) {
             return state.user
         },
-        admin(state){
+        admin(state) {
             return state.isAdmin
         },
         url(state) {
             return state.url
+        },
+        token(state) {
+            return state.token
         }
     },
 
@@ -60,6 +64,12 @@ export default new Vuex.Store({
         },
         troggle_off_admin: (state) => {
             state.user.isAdmin = false;
+        },
+        set_token: (state, token) => {
+            state.token = token
+        },
+        delete_token: (state) => {
+            state.token = ''
         }
     },
 
@@ -70,9 +80,7 @@ export default new Vuex.Store({
             }, 0);
         },
         troggle_off_auth: (context) => {
-            setTimeout(function () { // reach out for data
-                context.commit('troggle_off_auth');
-            }, 0);
+            context.commit('troggle_off_auth');
         },
         troggle_on_admin: (context) => {
             setTimeout(function () { // reach out for data
@@ -80,9 +88,13 @@ export default new Vuex.Store({
             }, 0);
         },
         troggle_off_admin: (context) => {
-            setTimeout(function () { // reach out for data
-                context.commit('troggle_off_admin');
-            }, 0);
+            context.commit('troggle_off_admin');
+        },
+        set_token: (context, token) => {
+            context.commit("set_token", token)
+        },
+        delete_token: (context) => {
+            context.commit("delete_token")
         }
     }
 })

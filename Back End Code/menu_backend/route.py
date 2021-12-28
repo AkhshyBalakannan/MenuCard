@@ -2,7 +2,7 @@
 from flask import request, jsonify
 from flask.helpers import make_response
 from menu_backend import app, db
-from menu_backend.models.food import create_relation
+from menu_backend.models.food import create_relation, delete_relation
 from menu_backend.decorators import token_required, admin_only
 from flask_cors import CORS, cross_origin
 
@@ -30,7 +30,7 @@ def drop_all(current_user):
 @app.route('/link', methods=['GET','PATCH'])
 @token_required
 @admin_only
-def relation(current_user):
+def make_relation(current_user):
     '''Create Relation
     Data must be given with
     food_public_id, meal_public_id
@@ -41,3 +41,15 @@ def relation(current_user):
     data = request.get_json()
     relation_instance = create_relation(data)
     return f'created relation {relation_instance}'
+
+@app.route('/unlink', methods=['PATCH'])
+@token_required
+@admin_only
+def undo_relation(current_user):
+    '''Delete Relation
+    Data must be given with
+    food_public_id, meal_public_id
+    '''
+    data = request.get_json()
+    relation_instance = delete_relation(data)
+    return f'Deleted relation {relation_instance}'
