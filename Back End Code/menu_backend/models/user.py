@@ -1,6 +1,7 @@
 '''USER MODEL'''
 import uuid
 from menu_backend import db, bcrypt
+from flask import make_response, jsonify
 
 # pylint: disable=no-member
 
@@ -21,13 +22,15 @@ class User(db.Model):
 
 def create_user(data):
     '''Create User Instance'''
+    if not data or not data['username'] or not data['password'] or not data['email']:
+        return jsonify({'message':'Please Provide User Details'})
     hashed_password = bcrypt.generate_password_hash(
         data['password']).decode('utf-8')
     user = User(public_id=str(uuid.uuid4(
     )), username=data['username'], email=data['email'], password=hashed_password)
     db.session.add(user)
     db.session.commit()
-    return user.public_id
+    return jsonify({'message': "Account created successfully", 'public_id': user.public_id})
 
 def update_user(data, user_instance):
     '''Update User Instance'''
@@ -37,8 +40,8 @@ def update_user(data, user_instance):
     db.session.commit()
 
 
-def delete_user(data):
+def delete_user(public_id):
     '''Delete User Instance'''
-    user = User.query.filter_by(public_id=data).first()
+    user = User.query.filter_by(public_id=public_id).first()
     db.session.delete(user)
     db.session.commit()

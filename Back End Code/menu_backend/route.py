@@ -11,6 +11,12 @@ from menu_backend.service import get_menu_data
 # pylint: disable=unused-argument
 
 
+@app.route('/')
+def testing():
+    '''Testing'''
+    return 'Hello from Menucard'
+
+
 @app.route('/db-create')
 def create_all():
     '''Create database'''

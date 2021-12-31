@@ -34,8 +34,8 @@ def all_user(current_user):
 def register_user():
     '''Post Register User'''
     data = request.get_json()
-    auth = create_user(data)
-    return jsonify({'message': "account created successfully"})
+    res = create_user(data)
+    return res
 
 
 @auth_routes.route('/login', methods=['POST'])
@@ -79,7 +79,6 @@ def user_promotion(current_user, public_id):
 
 @auth_routes.route('/delete/<public_id>', methods=['DELETE'])
 @token_required
-@admin_only
 @cross_origin()
 def user_deletion(current_user, public_id):
     '''Delete - Delete User'''

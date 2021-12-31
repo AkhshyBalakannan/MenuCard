@@ -28,6 +28,9 @@ def promote_user(public_id):
 
 def generate_token(auth):
     '''To generate token used as for login access'''
+    if not auth:
+        return make_response('Please Provide User Details', 404)
+
     if not auth or not auth['username'] or not auth['password']:
         return make_response('Could not verify', 401)
 
