@@ -22,7 +22,7 @@ def create_meal(data):
     meal_instance = Meal(meal_name=data['meal_name'], public_id=str(uuid.uuid4()))
     db.session.add(meal_instance)
     db.session.commit()
-    return meal_instance
+    return meal_instance.public_id
 
 
 def update_meal(data):
@@ -33,7 +33,7 @@ def update_meal(data):
     meal_instance.meal_name = data['meal_name']
     db.session.add(meal_instance)
     db.session.commit()
-    return meal_instance
+    return meal_instance.public_id
 
 
 def delete_meal(public_id):

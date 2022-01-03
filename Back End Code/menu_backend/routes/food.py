@@ -18,6 +18,7 @@ def food(current_user):
     data = food_list()
     return jsonify(data)
 
+
 @food_routes.route('/create', methods=['POST'])
 @token_required
 @admin_only
@@ -27,8 +28,8 @@ def food_create(current_user):
     food_name
     '''
     data = request.get_json()
-    food_instance = create_food(data)
-    return f'Created Food {food_instance}'
+    food_public_id = create_food(data)
+    return jsonify(message='Created Food', public_id=food_public_id)
 
 
 @food_routes.route('/update', methods=['PATCH'])
@@ -40,8 +41,8 @@ def food_update(current_user):
     old_food_name, new_food_name
     '''
     data = request.get_json()
-    food_instance = update_food(data)
-    return f'Updated Food {food_instance}'
+    food_public_id = update_food(data)
+    return jsonify(message='Updated Food', public_id=food_public_id)
 
 
 @food_routes.route('/delete/<public_id>', methods=['DELETE'])

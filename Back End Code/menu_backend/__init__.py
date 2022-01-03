@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1d053a80c2a8d6760b921bd7ed78f1e1'
-app.config['USERNAME'] = 'akhshy'
+app.config['USERNAME'] = 'admin'
 app.config['PASSWORD'] = 'password'
 # to get this key we use secret module in python
 # import secrets

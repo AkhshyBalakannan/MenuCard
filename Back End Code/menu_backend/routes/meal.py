@@ -39,8 +39,8 @@ def meal_create(current_user):
     meal_name
     '''
     data = request.get_json()
-    meal_instance = create_meal(data)
-    return f'Created Meal {meal_instance}'
+    meal_public_id = create_meal(data)
+    return jsonify(message='Created Meal', public_id=meal_public_id)
 
 
 @meal_routes.route('/update', methods=['PATCH'])
@@ -52,8 +52,8 @@ def meal_update(current_user):
     old_meal_name, new_meal_name
     '''
     data = request.get_json()
-    meal_instance = update_meal(data)
-    return f'Updated Meal {meal_instance}'
+    meal_public_id = update_meal(data)
+    return jsonify(message='Updated Meal', public_id=meal_public_id)
 
 
 @meal_routes.route('/delete/<public_id>', methods=['DELETE'])

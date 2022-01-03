@@ -33,7 +33,7 @@ def drop_all(current_user):
     return 'Database has been dropped'
 
 
-@app.route('/link', methods=['GET','PATCH'])
+@app.route('/link', methods=['GET', 'PATCH'])
 @token_required
 @admin_only
 def make_relation(current_user):
@@ -42,11 +42,12 @@ def make_relation(current_user):
     food_public_id, meal_public_id
     '''
     if(request.method == 'GET'):
-        menu_data = get_menu_data();
+        menu_data = get_menu_data()
         return jsonify(menu_data)
     data = request.get_json()
-    relation_instance = create_relation(data)
-    return f'created relation {relation_instance}'
+    relation_public_id = create_relation(data)
+    return jsonify(message='Created Relation')
+
 
 @app.route('/unlink', methods=['PATCH'])
 @token_required
@@ -58,4 +59,4 @@ def undo_relation(current_user):
     '''
     data = request.get_json()
     relation_instance = delete_relation(data)
-    return f'Deleted relation {relation_instance}'
+    return jsonify(message='Deleted Relation')

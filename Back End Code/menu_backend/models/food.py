@@ -1,5 +1,7 @@
 '''FOOD MODEL'''
 import uuid
+
+from flask import jsonify
 from menu_backend import db, models
 
 # pylint: disable=no-member
@@ -22,7 +24,7 @@ def create_food(data):
         food_name=data['food_name'], public_id=str(uuid.uuid4()))
     db.session.add(food_instance)
     db.session.commit()
-    return food_instance
+    return food_instance.public_id
 
 
 def update_food(data):
@@ -32,7 +34,7 @@ def update_food(data):
     food_instance.food_name = data['food_name']
     db.session.add(food_instance)
     db.session.commit()
-    return food_instance
+    return food_instance.public_id
 
 
 def delete_food(public_id):
@@ -50,7 +52,7 @@ def create_relation(data):
         public_id=data['meal_public_id']).first()
     meal_instance.meal_food.append(food_instance)
     db.session.commit()
-    return food_instance
+    return jsonify(food_id=food_instance.public_id, meal_id=meal_instance.public_id)
 
 
 def delete_relation(data):
