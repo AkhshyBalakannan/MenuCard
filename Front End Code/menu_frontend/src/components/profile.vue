@@ -21,63 +21,74 @@
                 <p class="fonts">{{ user_data.email }}</p>
               </div>
               <form method="post" @submit.prevent="updateProfile">
-              <div class="update">
-                <h4>Update Profile</h4>
-                <small>Each updation needs password for verification</small>
-                <validation-provider rules="required" v-slot="{ errors }">
-                <div class="row mt-2">
-                  <div class="col">
-                    <label for="username">Username : </label>
-                  </div>
-                  <div class="col">
-                    <input
-                      class="form-control px-4"
-                      type="text"
-                      v-model="user_data.username"
-                      id="username"
-                    />
-                     <span class="required_field_false">{{ errors[0] }}</span>
-                  </div>
+                <div class="update">
+                  <h4>Update Profile</h4>
+                  <small>Each updation needs password for verification</small>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <div class="row mt-2">
+                      <div class="col">
+                        <label for="username">Username : </label>
+                      </div>
+                      <div class="col">
+                        <input
+                          class="form-control px-4"
+                          type="text"
+                          v-model="user_data.username"
+                          id="username"
+                          required
+                        />
+                        <span class="required_field_false">{{
+                          errors[0]
+                        }}</span>
+                      </div>
+                    </div>
+                  </validation-provider>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <div class="row">
+                      <div class="col"><label for="email">Email :</label></div>
+                      <div class="col">
+                        <input
+                          class="form-control px-4"
+                          type="text"
+                          v-model="user_data.email"
+                          id="email"
+                          required
+                        />
+                        <span class="required_field_false">{{
+                          errors[0]
+                        }}</span>
+                      </div>
+                    </div>
+                  </validation-provider>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <div class="row">
+                      <div class="col">*Password :</div>
+                      <div class="col">
+                        <input
+                          class="form-control px-4"
+                          type="password"
+                          v-model="user_data.password"
+                          required
+                        />
+                        <span class="required_field_false">{{
+                          errors[0]
+                        }}</span>
+                      </div>
+                    </div>
+                  </validation-provider>
+                  <button
+                    class="btn btn-primary px-4 ms-3 mt-2"
+                    @click.prevent="updateProfile"
+                  >
+                    Update Profile Details
+                  </button>
+                  <button
+                    class="btn btn-primary px-4 ms-3 mt-2"
+                    @click.prevent="deleteProfile"
+                  >
+                    Delete Profile
+                  </button>
                 </div>
-                </validation-provider>
-                <validation-provider rules="required" v-slot="{ errors }">
-                <div class="row">
-                  <div class="col"><label for="email">Email :</label></div>
-                  <div class="col">
-                    <input
-                      class="form-control px-4"
-                      type="text"
-                      v-model="user_data.email"
-                      id="email"
-                    />
-                    <span class="required_field_false">{{ errors[0] }}</span>
-                  </div>
-                  
-                </div>
-                </validation-provider>
-                <validation-provider rules="required" v-slot="{ errors }">
-                <div class="row">
-                  
-                  <div class="col">*Password :</div>
-                  
-                  <div class="col">
-                    <input
-                      class="form-control px-4"
-                      type="password"
-                      v-model="user_data.password"
-                    />
-                    <span class="required_field_false">{{ errors[0] }}</span>
-                  </div>
-                  
-                </div>
-                </validation-provider>
-                <button
-                  class="btn btn-primary px-4 ms-3 mt-2"
-                  @click.prevent="updateProfile"
-                >
-                  Update Profile Details
-                </button>
-              </div>
               </form>
             </div>
           </div>
@@ -95,6 +106,7 @@ export default {
         username: "",
         email: "",
         password: "",
+        public_id: "",
       },
     };
   },
@@ -107,8 +119,7 @@ export default {
   },
   methods: {
     updateProfile() {
-      if (
-        !(
+      if ( !(
           this.user_data.email == "" ||
           this.user_data.password == "" ||
           this.user_data.username == ""
@@ -119,9 +130,33 @@ export default {
           .then((data) => {
             this.$router.go();
           });
-      } else {
-        console.log("ERROR");
+      } 
+      else {
+        alert("Please Fill All Fields for Updations");
       }
+    },
+    deleteProfile() {
+      this.$http
+        .delete(
+          this.$store.getters.url + "/user/delete/" + this.user_data.public_id,
+          this.user_data
+        )
+        .then((data) => {
+          if (
+            !(
+              this.user_data.email == "" ||
+              this.user_data.password == "" ||
+              this.user_data.username == ""
+            )
+          ) {
+            this.$store.dispatch("troggle_off_auth");
+            this.$store.dispatch("troggle_off_admin");
+            this.$store.dispatch("delete_token");
+            this.$router.push("/signin");
+          } else {
+            alert("Please Fill All Fields for Deleting Profile");
+          }
+        });
     },
   },
 };

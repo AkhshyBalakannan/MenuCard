@@ -1,10 +1,10 @@
 '''Common Routes'''
 from flask import request, jsonify
 from flask.helpers import make_response
+from flask_cors.decorator import cross_origin
 from menu_backend import app, db
 from menu_backend.models.food import create_relation, delete_relation
 from menu_backend.decorators import token_required, admin_only
-from flask_cors import CORS, cross_origin
 
 from menu_backend.service import get_menu_data
 

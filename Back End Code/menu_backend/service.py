@@ -29,15 +29,15 @@ def promote_user(public_id):
 def generate_token(auth):
     '''To generate token used as for login access'''
     if not auth:
-        return make_response('Please Provide User Details', 404)
+        return make_response('Please Provide User Details')
 
-    if not auth or not auth['username'] or not auth['password']:
-        return make_response('Could not verify', 401)
+    if not auth['username'] or not auth['password']:
+        return make_response('Could not verify')
 
     user = User.query.filter_by(username=auth['username']).first()
 
     if not user:
-        return make_response('User Not Found in database', 404)
+        return make_response('User Not Found in database')
 
     if bcrypt.check_password_hash(user.password, auth['password']):
         token = jwt.encode({'public_id': user.public_id, 'exp': datetime.datetime.utcnow(
@@ -46,7 +46,7 @@ def generate_token(auth):
             return jsonify({'token':token, 'admin': 'true'})
         return jsonify({'token': token})
 
-    return make_response('Could not verify', 401)
+    return make_response('Could not verify')
 
 
 def menu_card():

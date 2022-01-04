@@ -68,18 +68,15 @@ def user_updation(current_user):
 
 
 @auth_routes.route('/promote/<public_id>', methods=['PUT'])
-@token_required
-@admin_only
 @cross_origin()
-def user_promotion(current_user, public_id):
-    '''Put Promote User'''
+def user_promotion(public_id):
+    '''Put Promote User only one time for admin user'''
     promote_user(public_id)
     return jsonify({'message': 'Promoted user!'})
 
 
 @auth_routes.route('/delete/<public_id>', methods=['DELETE'])
 @token_required
-@cross_origin()
 def user_deletion(current_user, public_id):
     '''Delete - Delete User'''
     delete_user(public_id)

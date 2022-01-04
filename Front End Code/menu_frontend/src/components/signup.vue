@@ -7,6 +7,9 @@
             <div class="card-title text-center border-bottom">
               <h2 class="p-3">SIGN UP</h2>
             </div>
+            <div class="alert alert-warning" role="alert" v-if="message">
+                {{ message }}
+              </div>
             <form method="POST" @submit.prevent="signup">
               <div class="card-body">
                 <div class="mb-4">
@@ -17,6 +20,7 @@
                       v-model="user_data.username"
                       class="form-control"
                       id="username"
+                      required
                     />
                     <span class="required_field_false">{{ errors[0] }}</span>
                   </validation-provider>
@@ -29,6 +33,7 @@
                       v-model="user_data.email"
                       class="form-control"
                       id="email"
+                      required
                     />
                     <span class="required_field_false">{{ errors[0] }}</span>
                   </validation-provider>
@@ -41,6 +46,7 @@
                       v-model="user_data.password"
                       class="form-control"
                       id="password"
+                      required
                     />
                     <span class="required_field_false">{{ errors[0] }}</span>
                   </validation-provider>
@@ -55,6 +61,7 @@
                       class="form-control"
                       id="confirmpassword"
                       v-model="user_data.confirm_password"
+                      required
                     />
                     <span class="required_field_false">{{ errors[0] }}</span>
                   </validation-provider>
@@ -81,11 +88,12 @@ export default {
         password: "",
         cofirm_password: "",
       },
+      message:"",
     };
   },
   methods: {
     signup: function () {
-      if (this.password === this.confirm_password) {
+      if (this.user_data.password === this.user_data.confirm_password) {
         this.$http
           .post(this.$store.getters.url + "/user/new", this.user_data)
           .then((data) => {
@@ -93,7 +101,8 @@ export default {
             this.$router.push("signin");
           });
       } else {
-        alert("Please Check Password");
+        this.message = "Please Check Password";
+        this.user_data.password = this.user_data.confirm_password = "";
       }
     },
   },
