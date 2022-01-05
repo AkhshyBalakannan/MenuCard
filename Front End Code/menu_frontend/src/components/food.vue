@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import store from "../store";
 export default {
   data() {
     return {
@@ -35,7 +34,6 @@ export default {
   },
   beforeMount() {
     this.$http.get(this.$store.getters.url + "/food/all").then((data) => {
-      console.log(data);
       this.food_data = data.body;
     });
   },

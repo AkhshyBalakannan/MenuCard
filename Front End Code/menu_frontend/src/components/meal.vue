@@ -14,7 +14,6 @@
           </thead>
           <tbody>
             <tr v-for="data in meal_data" :key="data.id">
-              <!-- <th scope="row">{{ data.id }}</th> -->
               <td>{{ data.meal_name }}</td>
               <td>{{ data.public_id }}</td>
             </tr>
@@ -35,7 +34,6 @@ export default {
   },
   beforeMount() {
     this.$http.get(this.$store.getters.url + "/meal/types").then((data) => {
-      console.log(data);
       this.meal_data = data.body;
     });
   },

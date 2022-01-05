@@ -64,11 +64,9 @@ class FlaskTest(unittest.TestCase):
         self.assertTrue(res['token'])
 
         response = login(client, f"{username}x", password)
-        self.assertEqual(404, response.status_code)
         self.assertEqual(response.data, b'User Not Found in database')
 
         response = login(client, username, f'{password}x')
-        self.assertEqual(401, response.status_code)
         self.assertEqual(b'Could not verify', response.data)
 
         # login with no user data

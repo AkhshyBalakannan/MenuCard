@@ -98,7 +98,6 @@ export default {
   },
   beforeMount() {
     this.$http.get(this.$store.getters.url + "/food/all").then((data) => {
-      console.log(data);
       this.foods_data = data.body;
     });
   },
@@ -108,30 +107,23 @@ export default {
       this.$http
         .post(this.$store.getters.url + "/food/create", this.add_food_data)
         .then((data) => {
-          console.log(data);
           this.$router.go();
         });
     },
     delete_food(data) {
       this.delete_public_id = data;
-      console.log("Entering Food Delete Function");
       this.$http
-        .delete(
-          this.$store.getters.url + "/food/delete/" + this.delete_public_id
-        )
+        .delete(this.$store.getters.url + "/food/delete/" + this.delete_public_id)
         .then((data) => {
-          console.log(data);
           this.$router.go();
         });
     },
     update_food(data) {
       if (!(this.update.food_name == "")) {
         this.update.public_id = data;
-        console.log("Entering Food Update Function");
         this.$http
           .patch(this.$store.getters.url + "/food/update", this.update)
           .then((data) => {
-            console.log(data);
             this.$router.go();
           });
       }

@@ -136,27 +136,22 @@ export default {
       }
     },
     deleteProfile() {
-      this.$http
-        .delete(
-          this.$store.getters.url + "/user/delete/" + this.user_data.public_id,
-          this.user_data
-        )
-        .then((data) => {
-          if (
+      if (
             !(
               this.user_data.email == "" ||
               this.user_data.password == "" ||
               this.user_data.username == ""
             )
           ) {
-            this.$store.dispatch("troggle_off_auth");
-            this.$store.dispatch("troggle_off_admin");
-            this.$store.dispatch("delete_token");
-            this.$router.push("/signin");
-          } else {
-            alert("Please Fill All Fields for Deleting Profile");
-          }
-        });
+      this.$http
+        .delete(this.$store.getters.url + "/user/delete/" + this.user_data.public_id)
+        .then((data) => {
+            this.$router.push("/signout");
+          });
+         }
+      else {
+        alert("Please Fill All Fields for Deleting Profile");
+      }
     },
   },
 };

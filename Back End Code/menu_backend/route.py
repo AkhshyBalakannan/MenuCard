@@ -45,7 +45,7 @@ def make_relation(current_user):
         menu_data = get_menu_data()
         return jsonify(menu_data)
     data = request.get_json()
-    relation_public_id = create_relation(data)
+    create_relation(data)
     return jsonify(message='Created Relation')
 
 
@@ -58,5 +58,5 @@ def undo_relation(current_user):
     food_public_id, meal_public_id
     '''
     data = request.get_json()
-    relation_instance = delete_relation(data)
+    delete_relation(data)
     return jsonify(message='Deleted Relation')

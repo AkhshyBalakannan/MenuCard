@@ -3,7 +3,7 @@
     <div class="card mt-3 mb-2">
       <div class="card-body">
         Hello Admin, You can add the relations for Food and Meal using the
-        Public ID provided below. You can also Delete the links made before by
+        Public ID provided below. You can also Delete links made before by
         clicking the food button below in Relation List Table with respective
         Meal Name
       </div>
@@ -100,14 +100,12 @@
             <table class="table">
               <thead>
                 <tr>
-                  <!-- <th scope="col">#</th> -->
                   <th scope="col">Food Name</th>
                   <th scope="col">Public ID</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="data in link_data.food_data" :key="data.id">
-                  <!-- <th scope="row">{{ data.id }}</th> -->
                   <td>{{ data.food_name }}</td>
                   <td>{{ data.public_id }}</td>
                 </tr>
@@ -119,14 +117,12 @@
             <table class="table">
               <thead>
                 <tr>
-                  <!-- <th scope="col">#</th> -->
                   <th scope="col">Meal Name</th>
                   <th scope="col">Public ID</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="data in link_data.meal_data" :key="data.id">
-                  <!-- <th scope="row">{{ data.id }}</th> -->
                   <td>{{ data.meal_name }}</td>
                   <td>{{ data.public_id }}</td>
                 </tr>
@@ -161,11 +157,9 @@ export default {
   },
   beforeMount() {
     this.$http.get(this.$store.getters.url + "/link").then((data) => {
-      console.log(data);
       this.link_data = data.body;
     });
     this.$http.get(this.$store.getters.url + "/meal/all").then((data) => {
-      console.log(data);
       this.menu_data = data.body;
     });
   },
@@ -177,7 +171,6 @@ export default {
         this.$http
           .patch(this.$store.getters.url + "/link", this.link)
           .then((data) => {
-            console.log(data);
             this.$router.go();
           });
       }
@@ -191,7 +184,6 @@ export default {
       this.$http
         .patch(this.$store.getters.url + "/unlink", this.unlink)
         .then((data) => {
-          console.log(data);
           this.$router.go();
         });
     },

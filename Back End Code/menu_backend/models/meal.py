@@ -1,6 +1,7 @@
 '''MEAL MODEL'''
 import uuid
 from menu_backend import db
+from flask import jsonify
 
 # pylint: disable=no-member
 
@@ -27,7 +28,6 @@ def create_meal(data):
 
 def update_meal(data):
     '''Update meal Instance'''
-    print(data)
     meal_instance = Meal.query.filter_by(
         public_id=data['public_id']).first()
     meal_instance.meal_name = data['meal_name']

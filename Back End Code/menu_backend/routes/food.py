@@ -28,6 +28,8 @@ def food_create(current_user):
     food_name
     '''
     data = request.get_json()
+    if not data['food_name']:
+        return jsonify(message='Please Provide Food Name')
     food_public_id = create_food(data)
     return jsonify(message='Created Food', public_id=food_public_id)
 
@@ -41,6 +43,8 @@ def food_update(current_user):
     old_food_name, new_food_name
     '''
     data = request.get_json()
+    if not data['food_name'] or not data['public_id']:
+        return jsonify(message='Please Provide Food Name or Public ID')
     food_public_id = update_food(data)
     return jsonify(message='Updated Food', public_id=food_public_id)
 

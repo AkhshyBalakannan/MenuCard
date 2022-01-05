@@ -39,6 +39,8 @@ def meal_create(current_user):
     meal_name
     '''
     data = request.get_json()
+    if not data['meal_name']:
+        return jsonify(message='Please Provide Meal Name')
     meal_public_id = create_meal(data)
     return jsonify(message='Created Meal', public_id=meal_public_id)
 
@@ -52,6 +54,8 @@ def meal_update(current_user):
     old_meal_name, new_meal_name
     '''
     data = request.get_json()
+    if not data['meal_name'] or not data['public_id']:
+        return jsonify(message='Please Provide Meal Name')
     meal_public_id = update_meal(data)
     return jsonify(message='Updated Meal', public_id=meal_public_id)
 

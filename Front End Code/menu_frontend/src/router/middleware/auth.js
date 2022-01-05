@@ -4,6 +4,5 @@ export default function auth({ next, store }) {
             name: 'signin'
         })
     }
-
     return next()
 }

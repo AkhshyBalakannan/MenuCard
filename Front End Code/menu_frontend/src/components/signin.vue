@@ -76,7 +76,6 @@ export default {
   },
   methods: {
     signin: function () {
-      console.log("Making Connection to server");
       this.$http
         .post(this.$store.getters.url + "/user/login", this.user_data)
         .then(function (data) {

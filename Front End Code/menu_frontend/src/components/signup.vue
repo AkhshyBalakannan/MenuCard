@@ -97,7 +97,6 @@ export default {
         this.$http
           .post(this.$store.getters.url + "/user/new", this.user_data)
           .then((data) => {
-            console.log(data);
             this.$router.push("signin");
           });
       } else {

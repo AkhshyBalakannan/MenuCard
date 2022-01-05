@@ -34,8 +34,10 @@ def all_user(current_user):
 def register_user():
     '''Post Register User'''
     data = request.get_json()
-    res = create_user(data)
-    return res
+    if not data or not data['username'] or not data['password'] or not data['email']:
+        return jsonify({'message': 'Please Provide User Details'})
+    user_public_id = create_user(data)
+    return jsonify({'message': "Account created successfully", 'public_id': user_public_id})
 
 
 @auth_routes.route('/login', methods=['POST'])

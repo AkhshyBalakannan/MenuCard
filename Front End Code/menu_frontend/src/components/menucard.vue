@@ -13,10 +13,6 @@
               <div class="card-flyer">
                 <div class="text-box">
                   <div class="image-box">
-                    <!-- <img
-                      src="https://cdn.pixabay.com/photo/2018/03/30/15/11/deer-3275594_960_720.jpg"
-                      alt=""
-                    /> -->
                     <img src="../assets/menucard.png" alt=""/>
                   </div>
                   <div class="text-container">
@@ -51,7 +47,6 @@ export default {
   },
   beforeMount() {
     this.$http.get(this.$store.getters.url + "/meal/all").then((data) => {
-      console.log(data);
       this.menu_data = data.body;
     });
   },
@@ -76,7 +71,7 @@ export default {
   border-radius: 5px;
 }
 #cards_landscape_wrap-2 .card-flyer .image-box {
-  background: #ffffff;
+  background: #ffff;
   overflow: hidden;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
@@ -87,10 +82,6 @@ export default {
 }
 #cards_landscape_wrap-2 .card-flyer:hover .image-box img {
   opacity: 0.7;
-  -webkit-transform: scale(1.15);
-  -moz-transform: scale(1.15);
-  -ms-transform: scale(1.15);
-  -o-transform: scale(1.15);
   transform: scale(1.15);
 }
 #cards_landscape_wrap-2 .card-flyer .text-box {
@@ -102,20 +93,12 @@ export default {
 #cards_landscape_wrap-2 .card-flyer {
   background: #ffffff;
   margin-top: 50px;
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  -ms-transition: all 0.2s ease-in;
-  -o-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
   box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
 }
 #cards_landscape_wrap-2 .card-flyer:hover {
   background: #fff;
   box-shadow: 0px 15px 26px rgba(0, 0, 0, 0.5);
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  -ms-transition: all 0.2s ease-in;
-  -o-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
   margin-top: 50px;
 }

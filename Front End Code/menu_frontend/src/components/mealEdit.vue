@@ -98,7 +98,6 @@ export default {
         this.$http
           .post(this.$store.getters.url + "/meal/create", this.add_meal_data)
           .then((data) => {
-            console.log(data);
             this.$router.go();
           });
       }
@@ -108,24 +107,20 @@ export default {
     },
     delete_meal(data) {
       this.delete_public_id = data;
-      console.log("Entering Meal Delete Function");
       this.$http
         .delete(
           this.$store.getters.url + "/meal/delete/" + this.delete_public_id
         )
         .then((data) => {
-          console.log(data);
           this.$router.go();
         });
     },
     update_meal(data) {
       if (!(this.update.meal_name == "")) {
         this.update.public_id = data;
-        console.log("Entering Food Update Function");
         this.$http
           .patch(this.$store.getters.url + "/meal/update", this.update)
           .then((data) => {
-            console.log(data);
             this.$router.go();
           });
       }
@@ -133,7 +128,6 @@ export default {
   },
   beforeMount() {
     this.$http.get(this.$store.getters.url + "/meal/types").then((data) => {
-      console.log(data);
       this.meals_data = data.body;
     });
   },
