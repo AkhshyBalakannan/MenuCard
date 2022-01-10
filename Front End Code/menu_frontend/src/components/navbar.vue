@@ -40,6 +40,10 @@
               <router-link to="/link">Link Meal & Food</router-link>
             </li>
 
+            <li class="nav-item" v-if="admin_user">
+              <router-link to="/users/edit">All Users</router-link>
+            </li>
+
             <li class="nav-item">
               <router-link to="/profile">Profile</router-link>
             </li>

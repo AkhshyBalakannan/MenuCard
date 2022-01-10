@@ -68,8 +68,8 @@ export default {
   data() {
     return {
       user_data: {
-        username: "admin",
-        password: "password",
+        username: "",
+        password: "",
       },
       message: "",
     };

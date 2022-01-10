@@ -18,16 +18,6 @@ const router = new Router({
         ...authRoutes,
         ...menuRoutes,
         {
-            path: '/profile',
-            name: 'profile',
-            component: Profile,
-            meta: {
-                middleware: [
-                    auth
-                ]
-            },
-        },
-        {
             path: '*',
             name: '404page',
             component: Notfoundpage,
